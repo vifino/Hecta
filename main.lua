@@ -1,4 +1,16 @@
 -- ]-[ IRC Bot
+--  ____              ____
+-- / __ \            / __ \
+-- |/  \ \          / /  \|
+--      | |        | |
+--      | |        | |
+--      | |________| |
+--      |  ________  |
+--      | |        | |           ________
+--      | |        | |          /   An   \
+--      | |        | |         /  IRC bot \
+-- |\__/  |        |  \__/|   /  YOUR way  \
+-- \_____/          \_____/   \____________/
 -- Made by vifino
 local socket=require("socket")
 if not socket then error("Please install LuaSocket.") end
