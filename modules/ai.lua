@@ -31,9 +31,9 @@ loopCalls["ai"] = ai
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function think(text, user)
-    if not string.find(text,escaped_nickname) == nil then
+    if text:find(escaped_nickname) =~= nil then
         seed()
-        if not string.find(text,escaped_nickname) == nil then
+        if text:find(escaped_nickname) ~= nil then
             local r = replies[math.random(#replies)] ..", "..nick
             if math.random(0,3) == 0 then
                 r = r..postfixes[math.random(#postfixes)]
