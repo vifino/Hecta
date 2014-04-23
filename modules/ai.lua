@@ -3,6 +3,10 @@ local escaped_nickname = escape_lua_pattern(nickname)
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function think(text, user)
+    send("PRIVMSG "..channel.." :1 "..text)
+    send("PRIVMSG "..channel.." :2 "..escaped_nickname)
+    send("PRIVMSG "..channel.." :3 "..text:match(escaped_nickname))
+    send("PRIVMSG "..channel.." :4 "..text:lower():match("hello"))
     if text:match(escaped_nickname) ~= nil then
         seed()
         if text:lower():match("hello") ~= nil then
