@@ -35,7 +35,7 @@ function theAnswer()
 		local d = math.random(5,100);
 		local a = math.random(12,40);
 		local answers = {"Forty Two.","Forty 2.","40 + 2",a.." + "..42-a, 42*d.." ÷ "..d}
-		return answers[math.random(1,#answers)
+		return answers[math.random(1,#answers)]
 	else 
 		--Original
 		return "42."
