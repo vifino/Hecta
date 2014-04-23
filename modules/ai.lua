@@ -3,13 +3,9 @@ local escaped_nickname = escape_lua_pattern(nickname)
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function think(text, user, channel)
-    send("PRIVMSG "..channel.." :1 "..text)
-    send("PRIVMSG "..channel.." :2 "..escaped_nickname)
-    if text:match(escaped_nickname) then send("PRIVMSG "..channel.." :3 Bot name found") end
-    if text:lower():match("hello") then send("PRIVMSG "..channel.." :4 Hello") end
-    if text:match(escaped_nickname) ~= nil then
+    if text:match(escaped_nickname) then
         seed()
-        if text:lower():match("hello") ~= nil then
+        if text:lower():match("hello") then
             local r = replies[math.random(#replies)] ..", "..user
             if math.random(3) == 1 then
                 r = r..postfixes[math.random(#postfixes)]
