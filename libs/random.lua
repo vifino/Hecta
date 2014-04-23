@@ -1,4 +1,3 @@
-random = {}
-function random.seed()
+function seed()
   math.randomseed( tonumber(tostring(os.time()):reverse():sub(1,6)) )
 end
