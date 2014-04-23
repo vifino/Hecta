@@ -83,10 +83,10 @@ do
 				execute=function(txt)
 					local cmd,tx=txt:match("^(.-) (.+)$")
 					cmd=cmd or txt
-					if cmd=="slap" or cmd=="jenkins" or cmd=="j" or cmd=="beta" or cmd=="build" or cmd=="short" or cmd=="s" then -- spammy / slow
-						return false,"Nope."
+					if cmd=="lua" or cmd=="dofile"  then
+						return no()
 					end
-					return hook.queue("command_"..(cmd or txt),usr,usr.chan,tx or "")
+					return evalCommand(txt) or nil
 				end,
 				exit=function()
 					error()
