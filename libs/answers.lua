@@ -2,7 +2,7 @@
 -- Made by vifino
 function no()
 	seed()
-	if math.random(3) == 1 then
+	if math.random(2) == 1 then
 		local nou = {"Nou", "Nope!","nope.avi","not.inUrDreamz.com","Noo!","Nu.","Nu","No way.", "lolno", nickname.." says no!"}
 		return nou[math.random(1,#nou)]
 	else
@@ -20,7 +20,7 @@ end
 
 function maybe()
 	seed()
-	if math.random(5) == 1 then
+	if math.random(2) == 1 then
 		local maybe = {"Depends...","May, under certain situations.", "Perhaps", "May or may not"}
 		return maybe[math.random(1,#maybe)]
 	else
@@ -30,7 +30,7 @@ end
 
 function theAnswer()
 	seed()
-	if math.random(5) == 1 then
+	if math.random(3) == 1 then
 		--Variations, including randomised mathematics
 		local d = math.random(5,100);
 		local a = math.random(12,40);
