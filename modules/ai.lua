@@ -1,4 +1,5 @@
 --Simple module
+local escaped_nickname = escape_lua_pattern(nickname)
 enabled = false
 function ai(line)
     if enabled == true then --Enabled
