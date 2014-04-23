@@ -1,11 +1,12 @@
 --Simple module
+
 local escaped_nickname = escape_lua_pattern(nickname)
 enabled = false
 function ai(line)
     if enabled == true then --Enabled
+        local typemsg,nick,channel,txt=getMsgType(line)
         if not txt then return nil end --Has content
         if not txt:match("^"..commandPrefix.."(.*)") then --Not a command
-            local typemsg,nick,channel,txt=getMsgType(line)
             local reply = ""
             reply = Think(txt, nick)
             if not reply == "" then
@@ -30,9 +31,9 @@ loopCalls["aiWatcher"] = ai
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function Think(text, user)
-    if string.find(text,escaped_nickname) then
+    if not string.find(text,escaped_nickname) == nil then
         seed()
-        if string.find(text,"hello") then
+        if not string.find(text,escaped_nickname) == nil then
             local r = replies[math.random(#replies)] ..", "..nick
             if math.random(0,3) == 0 then
                 r = r..postfixes[math.random(#postfixes)]
