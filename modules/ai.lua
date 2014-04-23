@@ -1,16 +1,13 @@
---Simple module
 --AI code
 local escaped_nickname = escape_lua_pattern(nickname)
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function think(text, user)
-    local r = ""
-    print(text)
     if text:match(escaped_nickname) ~= nil then
         seed()
-        if text:match(escaped_nickname) ~= nil then
+        if text:lower():match("hello") ~= nil then
             local r = replies[math.random(#replies)] ..", "..user
-            if math.random(0,3) == 0 then
+            if math.random(3) == 1 then
                 r = r..postfixes[math.random(#postfixes)]
             end
             return r
@@ -18,6 +15,9 @@ local function think(text, user)
     end
     return ""
 end
+
+--Simple module
+
 enabled = false
 function ai(line)
     if enabled then --Enabled
