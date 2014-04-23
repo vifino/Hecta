@@ -29,12 +29,15 @@ loopCalls["aiWatcher"] = ai
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function Think(text, user)
-    if text:lower():match("hello") then
-        local r = replies[math.random(#replies)] ..", "..nick
-        if math.random(0,5) == 0 then
-            r = r..postfixes[math.random(#postfixes)]
+    if string.find(text,nickname) then
+        seed()
+        if text:lower():match("hello") then
+            local r = replies[math.random(#replies)] ..", "..nick
+            if math.random(0,3) == 0 then
+                r = r..postfixes[math.random(#postfixes)]
+            end
+            return r
         end
-        return r
     end
     return ""
 end
