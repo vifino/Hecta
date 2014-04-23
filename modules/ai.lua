@@ -1,9 +1,10 @@
 --Simple module
-
 --AI code
+local escaped_nickname = escape_lua_pattern(nickname)
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function think(text, user)
+    local r = ""
     print(text)
     if text:match(escaped_nickname) ~= nil then
         seed()
@@ -17,11 +18,9 @@ local function think(text, user)
     end
     return ""
 end
-
-local escaped_nickname = escape_lua_pattern(nickname)
 enabled = false
 function ai(line)
-    if enabled == true then --Enabled
+    if enabled then --Enabled
         local typemsg,nick,channel,txt=getMsgType(line)
         if not typemsg == "msg" then return nil end
         if not txt then return nil end --Has content
