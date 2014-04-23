@@ -171,11 +171,21 @@ do
 			return "Nope."
 		end
 	end
-	commands["luafile"]=function(text,nick,channel)
+	commands["aluafile"]=function(text,nick,channel)
 		local inputTable = splitToTable(text, "%S+")
 		if inputTable[1] then
 			for i,item in pairs(splitbyLines(text)) do
 				commands[">>"](item,nick,channel)
+			end
+		else
+			return "Error: Can't execute nothing!"
+		end
+	end
+	commands["luafile"]=function(text,nick,channel)
+		local inputTable = splitToTable(text, "%S+")
+		if inputTable[1] then
+			for i,item in pairs(splitbyLines(text)) do
+				commands["lua"](item,nick,channel)
 			end
 		else
 			return "Error: Can't execute nothing!"
