@@ -1,12 +1,31 @@
 --Simple module
 
+--AI code
+local replies = {"Hello","Hi","Ohia","Hey"}
+local postfixes = {"!","..."," :D"}
+local function think(text, user)
+    print(text)
+    if text:match(escaped_nickname) ~= nil then
+        seed()
+        if text:match(escaped_nickname) ~= nil then
+            local r = replies[math.random(#replies)] ..", "..nick
+            if math.random(0,3) == 0 then
+                r = r..postfixes[math.random(#postfixes)]
+            end
+            return r
+        end
+    end
+    return ""
+end
+
 local escaped_nickname = escape_lua_pattern(nickname)
 enabled = false
 function ai(line)
     if enabled == true then --Enabled
+        local typemsg,nick,channel,txt=getMsgType(line)
+        if not typemsg == "msg" then return nil end
         if not txt then return nil end --Has content
         if not txt:match("^"..commandPrefix.."(.*)") then --Not a command
-            local typemsg,nick,channel,txt=getMsgType(line)
             local reply = ""
             reply = think(txt, nick)
             if not reply == "" then
@@ -26,20 +45,3 @@ function init(text,nick,channel)
 end
 commands["ai"] = init
 loopCalls["ai"] = ai
-
---AI code
-local replies = {"Hello","Hi","Ohia","Hey"}
-local postfixes = {"!","..."," :D"}
-local function think(text, user)
-    if text:find(escaped_nickname) =~= nil then
-        seed()
-        if text:find(escaped_nickname) ~= nil then
-            local r = replies[math.random(#replies)] ..", "..nick
-            if math.random(0,3) == 0 then
-                r = r..postfixes[math.random(#postfixes)]
-            end
-            return r
-        end
-    end
-    return ""
-end
