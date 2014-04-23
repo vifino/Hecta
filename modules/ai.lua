@@ -5,8 +5,8 @@ local postfixes = {"!","..."," :D"}
 local function think(text, user, channel)
     send("PRIVMSG "..channel.." :1 "..text)
     send("PRIVMSG "..channel.." :2 "..escaped_nickname)
-    send("PRIVMSG "..channel.." :3 "..text:match(escaped_nickname))
-    send("PRIVMSG "..channel.." :4 "..text:lower():match("hello"))
+    if text:match(escaped_nickname) then send("PRIVMSG "..channel.." :3 Bot name found") end
+    if text:lower():match("hello") then send("PRIVMSG "..channel.." :4 Hello") end
     if text:match(escaped_nickname) ~= nil then
         seed()
         if text:lower():match("hello") ~= nil then
