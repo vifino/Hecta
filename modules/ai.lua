@@ -2,7 +2,7 @@
 local escaped_nickname = escape_lua_pattern(nickname)
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
-local function think(text, user)
+local function think(text, user, channel)
     send("PRIVMSG "..channel.." :1 "..text)
     send("PRIVMSG "..channel.." :2 "..escaped_nickname)
     send("PRIVMSG "..channel.." :3 "..text:match(escaped_nickname))
@@ -30,7 +30,7 @@ function ai(line)
         if not txt then return nil end --Has content
         if not txt:match("^"..commandPrefix.."(.*)") then --Not a command
             local reply = ""
-            reply = think(txt, nick)
+            reply = think(txt, nick, channel)
             if not reply == "" then
                 send("PRIVMSG "..channel.." :"..reply)
             end
