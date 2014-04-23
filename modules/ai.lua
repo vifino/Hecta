@@ -9,7 +9,7 @@ local function think(text, user)
     if text:match(escaped_nickname) ~= nil then
         seed()
         if text:match(escaped_nickname) ~= nil then
-            local r = replies[math.random(#replies)] ..", "..nick
+            local r = replies[math.random(#replies)] ..", "..user
             if math.random(0,3) == 0 then
                 r = r..postfixes[math.random(#postfixes)]
             end
