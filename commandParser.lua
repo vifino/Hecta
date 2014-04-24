@@ -261,7 +261,7 @@ end
 
 function helpCMD(text, nick, channel)
 	local outputTable = {}
-	for i,k in  paris(commands) do table.insert(i) end
+	for i,k in pairs(commands) do table.insert(i) end
 	return table.concat(outputTable," | ")
 end
 
