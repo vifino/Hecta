@@ -4,7 +4,7 @@ local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function think(text, user, channel)
     print(text)
-    if text:match(escaped_nickname) == escaped_nickname then
+    if text:match(escaped_nickname) == nickname then
         print("Nick matched")
         if text:lower():match("hello") == "hello" then
             print("Hello found")
