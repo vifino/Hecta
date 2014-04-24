@@ -259,9 +259,16 @@ function gethb(text, nick, channel)
 	end
 end
 
+function helpCMD(text, nick, channel)
+	local outputTable = {}
+	for i,k in  paris(commands) do table.insert(i) end
+	return table.concat(outputTable," | ")
+end
+
 -- End of Command Functions
 
 function initCommands()
+	commands["help"] = helpCMD
 	commands["rainbow"] = rainbowify
 	commands["print"] = printIRC
 	commands["action"] = actionCMD
