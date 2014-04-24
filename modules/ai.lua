@@ -37,12 +37,16 @@ function ai(line)
     end
 end
 function init(text,nick,channel)
-    if enabled == true then
-        enabled = false
-        return "AI stopped"
-    else 
-        enabled = true
-        return "AI started"
+    if (isPrivileged(nick)) then
+        if enabled == true then
+            enabled = false
+            return "AI stopped"
+        else 
+            enabled = true
+            return "AI started"
+        end
+    else
+        return no()
     end
 end
 commands["ai"] = init
