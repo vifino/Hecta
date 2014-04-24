@@ -86,7 +86,7 @@ do
 					if cmd=="lua" or cmd=="dofile"  then
 						return no()
 					end
-					return evalCommand(txt) or nil
+					return evalCommand(usr["nick"],usr["chan"],txt) or nil
 				end,
 				exit=function()
 					error()
