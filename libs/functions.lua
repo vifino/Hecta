@@ -45,13 +45,13 @@ function printPretty(line)
 	end
 end
 function isPrivileged(nick)
+	local privileged = false
 	for i,name in pairs(admins) do
 		if name == nick then
 			privileged = true
-			break
 		end
 	end
-	return privileged or false
+	return privileged 
 end
 function setFlags(user,channel,flags)
 	msg("ChanServ", "FLAGS "..channel.." "..user.." "..flags)
