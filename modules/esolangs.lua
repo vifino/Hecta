@@ -62,9 +62,10 @@ function bf(txt,nick,channel)
 end
 commands["bf"] = bf
 function encodebf(text)
-	local command = "python utils/str2bf.py -s"
+	local newtext = text:gsub("\'",""):gsub("\"","")
+	local command = 'python utils/str2bf.py -s'
 	system.cmd(command)
-	local bfreturn = system.cmd(command.." "..text)
+	local bfreturn = system.cmd(command.." "..newtext)
 	return bfreturn
 end
 function encbf(txt,nick,channel)
