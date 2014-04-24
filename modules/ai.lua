@@ -28,9 +28,12 @@ function ai(line)
         if not typemsg == "msg" then return nil end
         if not txt then return nil end --Has content
         if not txt:match("^"..commandPrefix.."(.*)") then --Not a command
-            local reply = ""
+            local reply = think(txt, nick, channel)
             reply = think(txt, nick, channel)
-            if not reply == "" then
+            if reply == "" then
+                print("Reply empty")
+            else
+                print("Sent reply")
                 send("PRIVMSG "..channel.." :"..reply)
             end
         end
