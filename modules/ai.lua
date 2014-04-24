@@ -3,11 +3,9 @@ local escaped_nickname = escape_lua_pattern(nickname)
 local replies = {"Hello","Hi","Ohia","Hey"}
 local postfixes = {"!","..."," :D"}
 local function think(text, user, channel)
-    local Referenced = text:match(escaped_nickname)
-    if Referenced then
-        seed()
-        local Hello = text:lower():match("hello")
-        if Hello then
+    if text:match(escaped_nickname) == escaped_nickname then
+        if text:lower():match("hello") == "hello" then
+            seed()
             local r = replies[math.random(#replies)] ..", "..user
             if math.random(3) == 1 then
                 r = r..postfixes[math.random(#postfixes)]
