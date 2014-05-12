@@ -5,7 +5,8 @@ local postfixes = {"!","..."," :D"}
 local function think(text, user, channel)
     print(text)
     if text:match(escaped_nickname) == nickname then
-        print("Nick matched")
+        ---[[
+		print("Nick matched")
         if text:lower():match("hello") == "hello" then
             print("Hello found")
             seed()
@@ -15,6 +16,8 @@ local function think(text, user, channel)
             end
             return r
         end
+		--]]
+		--return http.request("86.165.120.243:27076/" .. text:gsub("^"..escaped_nickname,""):gsub(" ","%%20"))
     end
     return ""
 end

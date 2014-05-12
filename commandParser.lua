@@ -233,6 +233,7 @@ end
 function exitCMD(text, nick, channel)
 	local inputTable = splitToTable(text, "%S+")
 	if isPrivileged(nick) then
+		send("QUIT :Shuting down...")
 		os.exit(0)
 		return ""
 	else
@@ -246,7 +247,7 @@ function doFile(text, nick, channel)
 	else
 		return "Error: Can\'t execute nothing."
 	end
-	
+
 end
 
 function gethb(text, nick, channel)
@@ -322,14 +323,15 @@ local function doCommand(oldcommand,nick,channel)
 	else
 		return " "
 	end
-	
+
 end
 function evalCommand(nick,channel,command)
 	local commandPiped = {}
 	local commandStriped = triml(command)
 		local output = {}
 		local cmdCount = 0
-		for commandItem in commandStriped:gmatch("[^|]+") do
+		for commandItemOld in commandStriped:gmatch("[^|]+") do
+      local commandItem = triml(commandItemOld)
 			cmdCount = cmdCount + 1
 			if cmdCount ~= 1 then
 				output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)

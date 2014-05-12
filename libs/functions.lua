@@ -57,22 +57,27 @@ function setFlags(user,channel,flags)
 	msg("ChanServ", "FLAGS "..channel.." "..user.." "..flags)
 end
 function join( channel )
+	print("Joining "..channel)
+	--table.insert(channels,channel)
 	send("JOIN "..channel)
 end
 function joinChannels()
-	for i,channel in pairs(channels) do
+	local channelList = channels
+	for i,channel in pairs(channelList) do
 		join(channel)
 	end
 end
 function part( channel )
+	print("Parting "..channel)
+	--table.insert(channels,channel)
 	send("PART "..channel)
 end
 function msg(channel, msg)
 	if (channel and msg) then
-	    local newmsg = msg:gsub("[\r\n]", "|")
+		local newmsg = msg
+		--local newmsg = msg:gsub("[\r\n]", "|")
 		local privmsgStr = "PRIVMSG "..channel.." :"
 		for i,item in pairs(splitn(newmsg,512-#privmsgStr-4)) do
-		    local newitem = tostring(item:gmatch("[^\r\n]+", "|"))
 			print(username.." -> "..channel..": "..item)
 			send("PRIVMSG "..channel.." :"..item)
 		end

@@ -22,7 +22,7 @@ function receive()
 	if line:match("^PING") then
 		send(line:gsub("PING","PONG"))
 	elseif line:match("^:(.+) KICK (.+)") then
-		local _, channel = line:match("^:(.+) KICK (.+)") 
+		local _, channel = line:match("^:(.+) KICK (.+)")
 		join(channel)
 	end
 	return line
@@ -67,7 +67,7 @@ function botLogic(line)
 			    	msg(user,"> "..returnVal)
 			    end
 			else
-			    returnVal = evalCommand(user, channel, txt:match("^"..commandPrefix.."(.*)"))
+			    returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..commandPrefix.."(.*)")),"[\r\n]", "|")
 			    returnTable = splitToTable(returnVal, "%S+")
 			    if returnTable[1] ~= nil then
 				    msg(channel,"> "..returnVal)
@@ -82,7 +82,7 @@ function botLogic(line)
 			--	msg(channel,"Error in execution.")
 			--end
 			]]
-			
+
 		end
 	end
 end
@@ -106,7 +106,7 @@ if password ~= nil then
 	local identified = false
 	--[[while not identified do
 		local line = receive()
-		if line:match("^:NickServ!NickServ@(.*) NOTICE "..username.." :You are now identified for "..username) then
+		if line:match("^:NickServ!NickServ@(.*) NOTICE "..username.." :You are now identified for ") then
 			identified = true
 		end
 	end]]

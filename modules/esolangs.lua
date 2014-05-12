@@ -82,3 +82,17 @@ function encbf(txt,nick,channel)
 	end
 end
 commands["encbf"] = encbf
+function rubyeval(text,nick,channel)
+	if text == "-v" then
+		return system.cmd("ruby -v")
+	else
+		--local rubycode = 'require "sandbox"\nsand = Sandbox::Safe.new\nsand.eval <<-RUBY\nrequire "bundler"\Bundler.require :sandbox\nRUBY\nsand.activate!\nsand.eval \''..text..'\''
+		local rubycode = '$SAFE = 4\neval(\''..text..')\''
+		local command = "echo \'"..rubycode.."\' > /tmp/rubyfile"
+		system.cmd(command)
+		local rubyreturn = system.cmd("ruby /tmp/rubyfile")
+		system.cmd("rm /tmp/rubyfile")
+		return rubyreturn
+	end
+end
+--commands["ruby"] = rubyeval
