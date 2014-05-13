@@ -57,17 +57,17 @@ function botLogic(line)
 			else
 				msg(channel, no())
 			end
-		elseif (txt:match("^"..commandPrefix.."(.*)") and txt ~= "$") then
+		elseif (txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)") and txt ~= "$") then
 			local returnVal = ""
 			local returnTable = {}
 			if channel == nickname then
-			    returnVal = evalCommand(user, user, txt:match("^"..commandPrefix.."(.*)"))
+			    returnVal = evalCommand(user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
 			    returnTable = splitToTable(returnVal, "%S+")
 			    if returnTable[1] ~= nil then
 			    	msg(user,"> "..returnVal)
 			    end
 			else
-			    returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..commandPrefix.."(.*)")),"[\r\n]", "|")
+			    returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)")),"[\r\n]", "|")
 			    returnTable = splitToTable(returnVal, "%S+")
 			    if returnTable[1] ~= nil then
 				    msg(channel,"> "..returnVal)

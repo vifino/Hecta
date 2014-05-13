@@ -134,7 +134,7 @@ function reverse(text,nick,channel, ...)
 end
 
 function void(text,nick,channel, ...)
-	return " "
+	return nil
 end
 
 function getVar(text,nick,channel, ...)
