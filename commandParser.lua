@@ -318,7 +318,9 @@ local function doCommand(oldcommand,nick,channel)
 			local funcOutput = currentFunc(triml(argString),nick,channel,unpack(argTable))
 			return funcOutput
 		else
-			return "Command \""..commandItems[1].."\" doesn\'t exist."
+			if commandNotFoundMessage then
+				return "Command \""..commandItems[1].."\" doesn\'t exist."
+			end
 		end
 	else
 		return " "

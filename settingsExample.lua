@@ -11,5 +11,6 @@ password = ""
 nickname = "MyBot"
 channels = {}
 commandPrefix = "$"
+commandNotFoundMessage = false
 -- Wolfram Alpha API Key:
 WAAppID = "XXXXXXXXXXXXXXX"
