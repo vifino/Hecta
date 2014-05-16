@@ -72,7 +72,7 @@ function splitn(txt,num)
 end
 function splitbyLines(text)
 	local returnTable = {}
-	for line in string:gmatch("[^\r\n]+") do
+	for line in text:gmatch("[^\r\n]+") do
 		table.insert(returnTable, line)
 	end
 	return returnTable

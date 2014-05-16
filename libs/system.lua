@@ -18,7 +18,7 @@ function system.cmd(command, data)
 	 	f:close()
 		s = string.gsub(s, '^%s+', '')
 		s = string.gsub(s, '%s+$', '')
-		s = string.gsub(s, '[\n\r]+', ' | ')
+		--s = string.gsub(s, '[\n\r]+', ' | ')
 		return s
 	else
 		local f = assert(io.popen(command.." 2>&1", 'r'))
@@ -26,7 +26,7 @@ function system.cmd(command, data)
 	 	f:close()
 		s = string.gsub(s, '^%s+', '')
 		s = string.gsub(s, '%s+$', '')
-		s = string.gsub(s, '[\n\r]+', ' | ')
+		--s = string.gsub(s, '[\n\r]+', ' | ')
 		return s
 	end
 end
