@@ -54,7 +54,6 @@ do
 			end,
 			next=next,
 			pairs=pairs,
-			pcall=pcall,
 			print=function(...)
 				for k,v in pairs({...}) do
 					out=out..tostring(v).."\n"
@@ -66,15 +65,13 @@ do
 			select=select,
 			setfenv=function(func,env)
 				if tsbox[func] then
-					return false,"Nope."
+					return false,no()
 				end
 				return setfenv(func,env)
 			end,
-			setmetatable=setmetatable,
 			tonumber=tonumber,
 			tostring=tostring,
 			type=type,
-			unpack=unpack,
 			xpcall=xpcall,
 			os={
 				clock=os.clock,
@@ -98,12 +95,26 @@ do
 					out=out..table.concat({...})
 				end,
 			},
+			string = {
+						sub = string.sub,
+						find = string.find,
+						gsub =  string.gsub,
+						gfind = string.gfind,
+						reverse = string.reverse,
+						match = string.match,
+						char = string.char,
+						dump = string.dump,
+						byte = string.byte,
+						upper = string.upper,
+						len = string.len,
+						format = string.format,
+						gmatch = string.gmatch,
+						lower = string.lower
+			}
 		}
 		for k,v in pairs({
-			coroutine=coroutine,
 			math=math,
-			table=table,
-			string=string,
+			table=table
 		}) do
 			sbox[k]={}
 			for n,l in pairs(v) do

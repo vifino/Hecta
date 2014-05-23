@@ -315,7 +315,7 @@ local function doCommand(oldcommand,nick,channel)
 		end
 		local argString = string.sub(command,string.len(commandItems[1])+2)
 		if currentFunc ~= nil then
-			local funcOutput = currentFunc(triml(argString),nick,channel,unpack(argTable))
+			local funcOutput = currentFunc(argString,nick,channel,unpack(argTable))
 			return funcOutput
 		else
 			if commandNotFoundMessage then
@@ -333,7 +333,7 @@ function evalCommand(nick,channel,command)
 		local output = {}
 		local cmdCount = 0
 		for commandItemOld in commandStriped:gmatch("[^|]+") do
-      local commandItem = triml(commandItemOld)
+      		local commandItem = triml(commandItemOld)
 			cmdCount = cmdCount + 1
 			if cmdCount ~= 1 then
 				output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
@@ -342,8 +342,8 @@ function evalCommand(nick,channel,command)
 			end
 		end
 		if output[#output] ~= nil then
-			commandVars["last"] = trim(output[#output])
-			return trim(output[#output])
+			commandVars["last"] = triml(output[#output])
+			return triml(output[#output])
 		else
 			return ""
 		end
