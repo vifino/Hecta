@@ -14,6 +14,7 @@
 -- Made by vifino
 local socket=require("socket")
 if not socket then error("Please install LuaSocket.") end
+root = arg[0]:gsub("main.lua","")
 LastSaidline = ""
 loopCalls = {}
 function receive()
@@ -27,15 +28,15 @@ function receive()
 	end
 	return line
 end
-dofile("settings.lua")
+dofile(root.."settings.lua")
 local oldUsername = username
 server=socket.connect(address,port)
-dofile("generalFunc.lua")
-dofile("libs/system.lua")
-dofile("libUtil.lua")
-libUtil.loadDir("libs")
-dofile("commandParser.lua")
-libUtil.loadDir("modules")
+dofile(root.."generalFunc.lua")
+dofile(root.."libs/system.lua")
+dofile(root.."libUtil.lua")
+libUtil.loadDir(root.."libs")
+dofile(root.."commandParser.lua")
+libUtil.loadDir(root.."modules")
 initCommands()
 function botLogic(line)
 	local typemsg,user,channel,txt=getMsgType(line)
@@ -86,6 +87,7 @@ function botLogic(line)
 		end
 	end
 end
+seed()
 send("NICK "..username)
 send("USER "..username .." ~ ~ :I am a robot")
 local modeset = false

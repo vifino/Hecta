@@ -1,3 +1,9 @@
+local yomommaf = io.open(root.."resources/yomomma.txt", "r")
+local n = 0
+yomommatable = {}
+local yomommatxt = yomommaf:read("*all")
+yomommatable = splitbyLines(yomommatxt)
+
 function w00t()
 	return "W00T! UMAD BRO?!?" 
 end
@@ -54,3 +60,12 @@ function bestEvah()
 	return best[math.random(1,#best)]
 end
 commands["best"] = bestEvah
+function yomomma()
+	   return yomommatable[math.random(1,#yomommatable)]
+end
+commands["yomomma"] = yomomma
+function xkcd(text,nick,channel)
+	seed()
+	return text.."http://xkcd.com/"..tostring(math.random(0,1372))
+end
+commands["xkcd"] = xkcd

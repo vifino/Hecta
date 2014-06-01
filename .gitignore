@@ -2,3 +2,5 @@ settings.lua
 *.zip
 
 modules/pwn.lua
+
+modules/dictionary.lua

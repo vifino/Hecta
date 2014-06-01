@@ -16,7 +16,7 @@ do
 	local function rst()
 		local tsbox={}
 		sbox={
-			_VERSION=_VERSION,
+			_VERSION=_VERSION.." Sandbox",
 			assert=assert,
 			error=error,
 			getfenv=function(func)
@@ -186,7 +186,7 @@ do
 		local inputTable = splitToTable(text, "%S+")
 		if inputTable[1] then
 			for i,item in pairs(splitbyLines(text)) do
-				commands[">>"](item,nick,channel)
+				return commands[">>"](item,nick,channel)
 			end
 		else
 			return "Error: Can't execute nothing!"
@@ -196,7 +196,7 @@ do
 		local inputTable = splitToTable(text, "%S+")
 		if inputTable[1] then
 			for i,item in pairs(splitbyLines(text)) do
-				commands["lua"](item,nick,channel)
+				return commands["lua"](item,nick,channel)
 			end
 		else
 			return "Error: Can't execute nothing!"

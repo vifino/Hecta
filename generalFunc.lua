@@ -46,6 +46,7 @@ function trimr(s)
 end
 local http = require("socket.http")
 function putHastebin(text)
+	if not text or text == "" then text = nil err = "Not enough arguments" end
 	local newtext = text:gsub("\\n", string.char(10))
 	local data,err=http.request("http://hastebin.com/documents",newtext)
 	if data and data:match('{"key":"(.-)"') then
@@ -55,8 +56,9 @@ function putHastebin(text)
 	return "Error: "..err
 end
 function getHastebin(code)
+	if not code or code == "" then code = nil err = "Not enough arguments" end
 	local data,err=http.request("http://hastebin.com/raw/"..code)
-	if data then
+	if data and code then
 		return data
 	else
 		return "Error: "..err
