@@ -2,8 +2,7 @@
 address  = "irc.esper.net"
 port     = 5555
 admins   = {"vifino","MyNick"}
-bannedNicks = {}
-bannedHosts = {}
+blacklist = {}
 -- this is what it identifies it for:
 username = "MyBot"
 password = ""

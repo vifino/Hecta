@@ -59,31 +59,23 @@ function botLogic(line)
 				msg(channel, no())
 			end
 		elseif (txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)") and txt ~= "$") then
-			local returnVal = ""
-			local returnTable = {}
-			if channel == nickname then
-			    returnVal = evalCommand(user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
-			    returnTable = splitToTable(returnVal, "%S+")
-			    if returnTable[1] ~= nil then
-			    	msg(user,"> "..returnVal)
-			    end
-			else
-			    returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)")),"[\r\n]", "|")
-			    returnTable = splitToTable(returnVal, "%S+")
-			    if returnTable[1] ~= nil then
-				    msg(channel,"> "..returnVal)
-			    end
+			if isBlacklisted(user) then msg(channel,"> "..no()) else
+				local returnVal = ""
+				local returnTable = {}
+				if channel == nickname then
+				    returnVal = evalCommand(user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
+				    returnTable = splitToTable(returnVal, "%S+")
+				    if returnTable[1] ~= nil then
+				    	msg(user,"> "..returnVal)
+				    end
+				else
+				    returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)")),"[\r\n]", "|")
+				    returnTable = splitToTable(returnVal, "%S+")
+				    if returnTable[1] ~= nil then
+					    msg(channel,"> "..returnVal)
+				    end
+				end
 			end
-			returnTable = splitToTable(returnVal, "%S+")
-			--[[if pcall("local returnVal = evalCommand(user, channel, txt:match(\"^\"..commandPrefix..\"(.*)\"))") the
-			if returnTable[1] ~= nil then
-				msg(channel,"> "..returnVal)
-			end
-			--else
-			--	msg(channel,"Error in execution.")
-			--end
-			]]
-
 		end
 	end
 end

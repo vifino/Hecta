@@ -6,7 +6,6 @@ commandVars = {}
 -- Functions for Commands
 
 function printIRC(text,nick,channel)
-	print(nick,channel)
 	return text
 end
 function rainbowify(text,nick,channel, ...)
@@ -36,7 +35,7 @@ function append(text,nick,channel, ...)
 		-- Success
 		return appendString.." "..normalString
 	else
-		-- Missing ;
+		-- Missing :
 		return "Error: Colon not found!"
 	end
 end
@@ -134,7 +133,7 @@ function reverse(text,nick,channel, ...)
 end
 
 function void(text,nick,channel, ...)
-	return nil
+	return ""
 end
 
 function getVar(text,nick,channel, ...)
@@ -266,9 +265,27 @@ function helpCMD(text, nick, channel)
 	return table.concat(outputTable," | ")
 end
 
+function topic(text,nick,channel)
+	return text..getTopic(channel)
+end
+
+function topicset(text,nick,channel)
+	if isPrivileged(nick) then
+		local inputTable = splitToTable(text, "%S+")
+		if inputTable[1] then
+			print(text)
+			setTopic(channel,text)
+		else
+			return "Error: Not enough arguments."
+		end
+		return text
+	else return no() end
+end
+
 -- End of Command Functions
 
 function initCommands()
+	commands["test"] = function(text,nick,channel) return "I am in "..channel.." and you are "..nick.."!" end
 	commands["help"] = helpCMD
 	commands["rainbow"] = rainbowify
 	commands["print"] = printIRC
@@ -299,6 +316,8 @@ function initCommands()
 	commands["puthb"] = putHastebin
 	commands["gethb"] = gethb
 	commands["dofile"] = doFile
+	commands["topic"] = topic
+	commands["settopic"] = topicset
 end
 local function doCommand(oldcommand,nick,channel)
 	local command = triml(oldcommand)
@@ -315,6 +334,7 @@ local function doCommand(oldcommand,nick,channel)
 		end
 		local argString = string.sub(command,string.len(commandItems[1])+2)
 		if currentFunc ~= nil then
+			-- TODO: Run this pcall'ed
 			local funcOutput = currentFunc(argString,nick,channel,unpack(argTable))
 			return funcOutput
 		else
@@ -323,7 +343,7 @@ local function doCommand(oldcommand,nick,channel)
 			end
 		end
 	else
-		return " "
+		return ""
 	end
 
 end
@@ -333,10 +353,11 @@ function evalCommand(nick,channel,command)
 		local output = {}
 		local cmdCount = 0
 		for commandItemOld in commandStriped:gmatch("[^|]+") do
-      		local commandItem = triml(commandItemOld)
+      		local commandItem = triml(triml(commandItemOld))
 			cmdCount = cmdCount + 1
-			if cmdCount ~= 1 then
-				output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
+			if cmdCount > 1 then
+				--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
+				output[cmdCount] = doCommand(commandItem..output[cmdCount-1],nick,channel)
 			else
 				output[1] = doCommand(commandItem,nick,channel)
 			end

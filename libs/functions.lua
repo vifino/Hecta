@@ -53,6 +53,15 @@ function isPrivileged(nick)
 	end
 	return privileged 
 end
+function isBlacklisted(nick)
+	local blacklisted = false
+	for i,name in pairs(blacklist) do
+		if name == nick then
+			blacklisted = true
+		end
+	end
+	return blacklisted 
+end
 function setFlags(user,channel,flags)
 	msg("ChanServ", "FLAGS "..channel.." "..user.." "..flags)
 end
@@ -121,5 +130,27 @@ function userList(channel)
 		end
 	end
 	return users
+end
+function getTopic(channel)
+	if not channel then return nil end
+	local topicText = ""
+	send("TOPIC "..channel)
+	local finished = false
+	while not finished do
+		local line = receive()
+		if line:match(":(.*) 332 "..escape_lua_pattern(username).." "..escape_lua_pattern(channel).." :(.*)") then
+			local ircserver,topicText = line:match(":(.*) 332 "..escape_lua_pattern(username).." "..escape_lua_pattern(channel).." :(.*)")
+			print("server: "..ircserver)
+			print("Topic: "..topicText)
+			return topicText
+		end
+	end
+end
+function setTopic(channel,topic)
+	if not channel then return nil end
+	send("TOPIC "..channel.." :"..topic)
+end
+function notice(channel,text)
+	send("NOTICE "..channel.." :"..text)
 end
 -- End IRC Functions
