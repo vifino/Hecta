@@ -1,8 +1,11 @@
 local yomommaf = io.open(root.."resources/yomomma.txt", "r")
-local n = 0
 yomommatable = {}
 local yomommatxt = yomommaf:read("*all")
 yomommatable = splitbyLines(yomommatxt)
+
+local n101nosf = io.open(root.."resources/101nos.txt", "r")
+n101nostable = splitbyLines(n101nosf:read("*all"))
+
 
 function w00t()
 	return "W00T! UMAD BRO?!?" 
@@ -69,3 +72,7 @@ function xkcd(text,nick,channel)
 	return text.."http://xkcd.com/"..tostring(math.random(0,1372))
 end
 commands["xkcd"] = xkcd
+function n101nos()
+	   return "I'd love to, but..."..n101nostable[math.random(1,#n101nostable)]
+end
+commands["101nos"] = n101nos

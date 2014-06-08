@@ -3,7 +3,7 @@
 function no()
 	seed()
 	if math.random(2) == 1 then
-		local nou = {"Nou", "Nope!","nope.avi","not.inUrDreamz.com","Noo!","Nu.","Nu","No way.", "lolno", nickname.." says no!"}
+		local nou = {"Nou", "Nope!","nope.avi","not.inUrDreamz.com","Noo!","Nu.","Nu","No way.", "lolno", nickname.." says no!","Only for the brave.","I remember you. That says all."}
 		return nou[math.random(1,#nou)]
 	else
 		return "No."
