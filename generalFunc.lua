@@ -115,7 +115,7 @@ do
     return (s:gsub(".", matches))
   end
 end
-local function maxval(tbl)
+function maxval(tbl)
 	local mx=0
 	for k,v in pairs(tbl) do
 		if type(k)=="number" then
@@ -123,4 +123,9 @@ local function maxval(tbl)
 		end
 	end	
 	return mx
+end
+function stringToHex(str,devider)
+	return (string.gsub(str,"(.)",function (c)
+		return string.format("%02X%s",string.byte(c), spacer or " ")
+	end))
 end
