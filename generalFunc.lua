@@ -115,3 +115,12 @@ do
     return (s:gsub(".", matches))
   end
 end
+local function maxval(tbl)
+	local mx=0
+	for k,v in pairs(tbl) do
+		if type(k)=="number" then
+			mx=math.max(k,mx)
+		end
+	end	
+	return mx
+end

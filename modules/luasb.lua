@@ -1,15 +1,6 @@
 -- Lua Admin Shell, and lua sandbox
 -- Made by ping and vifino
 do
-	local function maxval(tbl)
-		local mx=0
-		for k,v in pairs(tbl) do
-			if type(k)=="number" then
-				mx=math.max(k,mx)
-			end
-		end
-		return mx
-	end
 	local sbox
 	local usr
 	local out
@@ -95,6 +86,9 @@ do
 					out=out..table.concat({...})
 				end,
 			},
+			channel = "",
+			nick = "",
+			username = username,
 			string = {
 						sub = string.sub,
 						find = string.find,
@@ -141,6 +135,8 @@ do
 		local user={nick=nick,chan=chan}
 		usr=user
 		out=""
+		sbox["nick"] = nick
+		sbox["channel"] = chan
 		local func,err=loadstring("return "..txt,"=lua")
 		if not func then
 			func,err=loadstring(txt,"=lua")
