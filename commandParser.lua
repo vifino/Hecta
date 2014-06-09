@@ -1,6 +1,7 @@
 -- The main LogicParser
 -- Made by vifino
 
+local escapingString ="$.;&.;$.;&.;$"
 commands = {}
 commandVars = {}
 -- Functions for Commands
@@ -357,13 +358,15 @@ local function doCommand(oldcommand,nick,channel)
 	end
 
 end
-function evalCommand(nick,channel,command)
+function evalCommand(nick,channel,commandOld)
+	local command = commandOld:gsub(escape_lua_pattern("\\|"), escapingString)
 	local commandPiped = {}
 	local commandStriped = triml(triml(command))
 		local output = {}
 		local cmdCount = 0
 		for commandItemOld in commandStriped:gmatch("[^|]+") do
-      		local commandItem = triml(triml(commandItemOld))
+		--for commandItemOld in commandStriped:gmatch("[^\]|") do
+      		local commandItem = triml(triml(commandItemOld:gsub(escape_lua_pattern(escapingString),"|")))
 			cmdCount = cmdCount + 1
 			if cmdCount > 1 then
 				--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
