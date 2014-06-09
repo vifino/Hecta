@@ -1,0 +1,6 @@
+--- Todo List
+	- General threading
+	- Send limit, to prevent flooding disconnect.
+	- Automatic Reconnect
+	- Escaping of Pipes ( | )
+	- Quote support ( ? )
