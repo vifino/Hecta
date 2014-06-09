@@ -63,13 +63,25 @@ function botLogic(line)
 				local returnVal = ""
 				local returnTable = {}
 				if channel == nickname then
-				    returnVal = evalCommand(user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
+					local funcSuccess,funcOutput=pcall(evalCommand,user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
+					if funcSuccess then
+						returnVal = funcOutput
+					else
+						returnVal = "Error: Please open a issue at ]-['s Github: "..putHastebin(funcOutput).."."
+					end
+				    --returnVal = evalCommand(user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
 				    returnTable = splitToTable(returnVal, "%S+")
 				    if returnTable[1] ~= nil then
 				    	msg(user,"> "..returnVal)
 				    end
 				else
-				    returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)")),"[\r\n]", "|")
+					local funcSuccess,funcOutput=pcall(evalCommand,user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
+					if funcSuccess then
+						returnVal = string.gsub(funcOutput,"[\r\n]", "|")
+					else
+						returnVal = "Error: Please open a issue at ]-['s Github: "..putHastebin(funcOutput).."."
+					end
+				   -- returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)")),"[\r\n]", "|")
 				    returnTable = splitToTable(returnVal, "%S+")
 				    if returnTable[1] ~= nil then
 					    msg(channel,"> "..returnVal)

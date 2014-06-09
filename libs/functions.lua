@@ -86,7 +86,7 @@ function msg(channel, msg)
 		local newmsg = msg
 		--local newmsg = msg:gsub("[\r\n]", "|")
 		local privmsgStr = "PRIVMSG "..channel.." :"
-		for i,item in pairs(splitn(newmsg,512-#privmsgStr-4)) do
+		for i,item in pairs(splitn(newmsg,512-#privmsgStr-50)) do
 			print(username.." -> "..channel..": "..item)
 			send("PRIVMSG "..channel.." :"..item)
 		end

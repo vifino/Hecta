@@ -285,7 +285,7 @@ end
 -- End of Command Functions
 
 function initCommands()
-	commands["test"] = function(text,nick,channel) return "I am in "..channel.." and you are "..nick.."!" end
+	commands["test"] = function(text,nick,channel) return "I am in \""..channel.."\" and you are "..nick.."!" end
 	commands["help"] = helpCMD
 	commands["rainbow"] = rainbowify
 	commands["print"] = printIRC
@@ -320,7 +320,8 @@ function initCommands()
 	commands["settopic"] = topicset
 end
 local function doCommand(oldcommand,nick,channel)
-	local command = triml(oldcommand)
+	local command = triml(triml(oldcommand))
+	print("Command \”"..command.."\"")
 	local commandItems = {}
 	for commandItem in command:gmatch("%S+") do table.insert(commandItems, commandItem) end
 	local currentFunc = commands[string.lower(commandItems[1])]
@@ -335,8 +336,17 @@ local function doCommand(oldcommand,nick,channel)
 		local argString = string.sub(command,string.len(commandItems[1])+2)
 		if currentFunc ~= nil then
 			-- TODO: Run this pcall'ed
-			local funcOutput = currentFunc(argString,nick,channel,unpack(argTable))
-			return funcOutput
+			--local funcOutput = currentFunc(argString,nick,channel,unpack(argTable))
+			--local res={pcall(currentFunc,nick,channel,unpack(argTable))}
+			--[[ l1=2,maxval(res) do
+				o=(o or "")..tostring(res[l1]).."\n"
+			end]]
+			local funcSuccess,funcOutput=pcall(currentFunc,argString,nick,channel,unpack(argTable))
+			if funcSuccess then
+				return funcOutput
+			else
+				return "Error: Please open a issue at ]-['s Github: "..putHastebin(funcOutput).."."
+			end
 		else
 			if commandNotFoundMessage then
 				return "Command \""..commandItems[1].."\" doesn\'t exist."
@@ -349,7 +359,7 @@ local function doCommand(oldcommand,nick,channel)
 end
 function evalCommand(nick,channel,command)
 	local commandPiped = {}
-	local commandStriped = triml(command)
+	local commandStriped = triml(triml(command))
 		local output = {}
 		local cmdCount = 0
 		for commandItemOld in commandStriped:gmatch("[^|]+") do
@@ -357,9 +367,9 @@ function evalCommand(nick,channel,command)
 			cmdCount = cmdCount + 1
 			if cmdCount > 1 then
 				--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
-				output[cmdCount] = doCommand(commandItem..output[cmdCount-1],nick,channel)
+				output[cmdCount] = doCommand(triml(commandItem..output[cmdCount-1]),nick,channel)
 			else
-				output[1] = doCommand(commandItem,nick,channel)
+				output[1] = doCommand(triml(commandItem),nick,channel)
 			end
 		end
 		if output[#output] ~= nil then
