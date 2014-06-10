@@ -19,6 +19,16 @@ function rainbowify(text,nick,channel, ...)
 	return rainbowText.."\3"
 end
 
+function rainwords(text,nick,channel)
+	local c=0
+	local colors={"04","07","08","03","02","12","06","04","07"}
+	local rainbowText = text:gsub("%S+",function(t)
+		c=(c%9)+1
+		return "\3"..colors[c]..t
+	end)
+	return rainbowText.."\3"
+end
+
 function actionCMD(text,nick,channel, ...)
 	action(channel,text)
 	return ""
@@ -289,6 +299,7 @@ function initCommands()
 	commands["test"] = function(text,nick,channel) return "I am in \""..channel.."\" and you are "..nick.."!" end
 	commands["help"] = helpCMD
 	commands["rainbow"] = rainbowify
+	commands["rainwords"] = rainwords
 	commands["print"] = printIRC
 	commands["action"] = actionCMD
 	commands["channel"] = returnChannel
@@ -336,12 +347,6 @@ local function doCommand(oldcommand,nick,channel)
 		end
 		local argString = string.sub(command,string.len(commandItems[1])+2)
 		if currentFunc ~= nil then
-			-- TODO: Run this pcall'ed
-			--local funcOutput = currentFunc(argString,nick,channel,unpack(argTable))
-			--local res={pcall(currentFunc,nick,channel,unpack(argTable))}
-			--[[ l1=2,maxval(res) do
-				o=(o or "")..tostring(res[l1]).."\n"
-			end]]
 			local funcSuccess,funcOutput=pcall(currentFunc,argString,nick,channel,unpack(argTable))
 			if funcSuccess then
 				return funcOutput

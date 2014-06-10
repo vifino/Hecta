@@ -28,16 +28,19 @@ function receive()
 	end
 	return line
 end
-dofile(root.."settings.lua")
-local oldUsername = username
+function loadFiles()
+	dofile(root.."settings.lua")
+	local oldUsername = username
+	dofile(root.."generalFunc.lua")
+	dofile(root.."libs/system.lua")
+	dofile(root.."libUtil.lua")
+	libUtil.loadDir(root.."libs")
+	dofile(root.."commandParser.lua")
+	libUtil.loadDir(root.."modules")
+	initCommands()
+end
+loadFiles()
 server=socket.connect(address,port)
-dofile(root.."generalFunc.lua")
-dofile(root.."libs/system.lua")
-dofile(root.."libUtil.lua")
-libUtil.loadDir(root.."libs")
-dofile(root.."commandParser.lua")
-libUtil.loadDir(root.."modules")
-initCommands()
 function botLogic(line)
 	local typemsg,user,channel,txt=getMsgType(line)
 	if typemsg == "msg" then
@@ -45,14 +48,7 @@ function botLogic(line)
 			send("PRIVMSG "..channel.." :Pong!")
 		elseif txt==commandPrefix.."reload" then
 			if isPrivileged(user) then
-				dofile("settings.lua")
-				dofile("generalFunc.lua")
-				dofile("libs/system.lua")
-				dofile("libUtil.lua")
-				libUtil.loadDir("libs")
-				dofile("commandParser.lua")
-				libUtil.loadDir("modules")
-				initCommands()
+				loadFiles()
 				joinChannels()
 				msg(channel, "Reloaded.")
 			else
@@ -121,11 +117,14 @@ if password ~= nil then
 	end
 end
 joinChannels()
-while true do
-	line=receive()
-	printPretty(line)
-	botLogic(line)
-	for i,func in pairs(loopCalls) do
-	   func(line)
+function startBot()
+	while true do
+		line=receive()
+		printPretty(line)
+		botLogic(line)
+		for i,func in pairs(loopCalls) do
+		   func(line)
+		end
 	end
 end
+startBot()
