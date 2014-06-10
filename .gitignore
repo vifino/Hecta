@@ -4,3 +4,7 @@ settings.lua
 modules/pwn.lua
 
 modules/dictionary.lua
+
+data/markov.txt
+
+modules/markov.lua
