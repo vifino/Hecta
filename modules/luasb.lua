@@ -50,9 +50,6 @@ do
 					out=out..tostring(v).."\n"
 				end
 			end,
-			rawequal=rawequal,
-			rawget=rawget,
-			rawset=rawset,
 			select=select,
 			setfenv=function(func,env)
 				if tsbox[func] then
