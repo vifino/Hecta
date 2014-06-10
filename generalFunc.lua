@@ -124,8 +124,88 @@ function maxval(tbl)
 	end	
 	return mx
 end
-function stringToHex(str,devider)
+function flipkv(t)
+	local nt = {}
+	for k,v in pairs(t) do
+		nt[v] = k
+	end
+	return nt
+end
+local hex2bint = {
+	["0"] = "0000",
+	["1"] = "0001",
+	["2"] = "0010",
+	["3"] = "0011",
+	["4"] = "0100",
+	["5"] = "0101",
+	["6"] = "0110",
+	["7"] = "0111",
+	["8"] = "1000",
+	["9"] = "1001",
+	["a"] = "1010",
+    ["b"] = "1011",
+    ["c"] = "1100",
+    ["d"] = "1101",
+    ["e"] = "1110",
+    ["f"] = "1111"
+}
+local bin2hext = flipkv(hex2bint)
+function hex2bin(s)
+	return string.gsub(s:gsub(" ",""),"(.)", function(i)
+		return hex2bint[1]
+	end)
+end
+function dec2hexOLD(str,devider)
 	return (string.gsub(str,"(.)",function (c)
-		return string.format("%02X%s",string.byte(c), spacer or " ")
+		return string.format("%X",string.byte(c), devider or " ")
 	end))
+end
+function bin2dec(s)
+	local num = 0
+	local ex = string.len(s) - 1
+	local l = 0
+	l = ex + 1
+	for i = 1, l do
+		b = string.sub(s, i, i)
+		if b == "1" then
+			num = num + 2^ex
+		end
+		ex = ex - 1
+	end
+	return string.format("%u", num)
+end
+function dec2bin(dec)
+	local result = ""
+	repeat
+		local divres = dec / 2
+		local int, frac = math.modf(divres)
+		dec = int
+		result = math.ceil(frac) .. result
+	until dec == 0
+	return result
+end
+function hex2dec(s)
+	return tonumber(s:gsub(" ",""), 16)
+end
+function dec2hex(dec)
+	dec = tonumber(dec)
+	local result = ""
+	local base16 = {"A","B","C","D","E","F"}
+	repeat
+		local remainder = dec % 16
+		if remainder >= 10 then
+			remainder = base16[remainder - 9]
+		end
+		result = remainder .. result
+		dec = math.modf(dec / 16)
+	until dec == 0
+	return result
+end
+function searchTable(t,val)
+	for k,v in pairs(t) do
+		if v == val then
+			return true,k
+		end
+	end
+	return false
 end
