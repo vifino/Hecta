@@ -121,7 +121,7 @@ end
 
 function partCMD(text,nick,channel)
 	if isPrivileged(nick) then
-		msg(channel, "Parting...")
+		msg(text or channel, "Parting...")
 		part(channel)
 	else
 		return no()
