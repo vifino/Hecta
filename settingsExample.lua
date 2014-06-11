@@ -13,3 +13,4 @@ commandPrefix = "$"
 commandNotFoundMessage = false
 -- Wolfram Alpha API Key:
 WAAppID = "XXXXXXXXXXXXXXX"
+enable_lolcode = false

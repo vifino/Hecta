@@ -16,7 +16,9 @@ function lolcode(text,nick,channel)
 		return "Error: Not enough Argumens."
 	end
 end
-commands["lolcode"] = lolcode
+if enable_lolcode then
+	commands["lolcode"] = lolcode
+end
 function coffeescript(text,nick,channel)
 	if text == "-v" then
 		return system.cmd("coffee -v")
@@ -45,7 +47,7 @@ function brainfuck(txt) -- Originally by ping, I dunno understand this brainfuck
 		:gsub(","," error(\"Input not supported.\")")
 	.." return o","=brainfuck")
 end
-function bf(txt,nick,channel) 
+function bf(txt,nick,channel)
 	local inputTable = splitToTable(txt, "%S+")
 	if inputTable[1] then
 			local func,err=brainfuck(txt)
@@ -63,7 +65,7 @@ end
 commands["bf"] = bf
 function encodebf(text)
 	local newtext = text:gsub("\'",""):gsub("\"","")
-	local command = 'python utils/str2bf.py -s'
+	local command = 'python '..root..'utils/str2bf.py -s'
 	system.cmd(command)
 	local bfreturn = system.cmd(command.." "..newtext)
 	return bfreturn
