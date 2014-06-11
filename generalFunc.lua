@@ -232,5 +232,5 @@ function string.split(s, p)
     return temp
 end
 function splitBySentence(text)
-	return string.split(text,"[^%.!?]*")
+	return string.split(text:gsub("\n",""):gsub("\r",""),"[^%.!?]*")
 end
