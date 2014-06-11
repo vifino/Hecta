@@ -30,7 +30,8 @@ end
 -- trim whitespace from left end of string
 function triml(s)
 	if s ~= nil then
-		return string.match(s,'^%s*(.*)')
+		--return string.match(s,'^%s*(.*)')
+		return string.gsub(s,'^%s*',"")
 	else
 		return s
 	end
@@ -39,7 +40,7 @@ end
 -- trim whitespace from right end of string
 function trimr(s)
 	if s ~= nil then
-		return string.find(s,'^%s*$') and '' or s:match(s,'^(.*%S)')
+		return string.find(s,'%s*$') and '' or s:match(s,'^(.*%S)')
 	else
 		return s
 	end
