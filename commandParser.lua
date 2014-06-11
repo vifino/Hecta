@@ -119,6 +119,15 @@ function joinCMD(text,nick,channel, ...)
 	end
 end
 
+function partCMD(text,nick,channel)
+	if isPrivileged(nick) then
+		msg(channel, "Parting...")
+		part(channel)
+	else
+		return no()
+	end
+end
+
 function bold(text,nick,channel, ...)
 	return string.char(2)..text
 end
@@ -306,6 +315,7 @@ function initCommands()
 	commands["append"] = append
 	commands["random"] = random
 	commands["join"] = joinCMD
+	commands["part"] = partCMD
 	commands["raw"] = raw
 	--commands["msg"] = message
 	--commands["setFlags"] = flags
