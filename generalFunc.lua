@@ -20,7 +20,7 @@ function concatTable(input, seperator)
 end
 -- trim whitespace from both ends of string
 function trim(s)
-	if s ~= nil then
+	if type(s) ~= "string" then
 		return string.find(s,'^%s*$') and '' or string.match(s,'^%s*(.*%S)')
 	else
 		return s
@@ -29,9 +29,9 @@ end
 
 -- trim whitespace from left end of string
 function triml(s)
-	if s ~= nil then
+	if type(s) ~= "string" then
 		--return string.match(s,'^%s*(.*)')
-		return string.gsub(s,'^%s*',"")
+		return string.gsub(s,'^%s+',"")
 	else
 		return s
 	end
@@ -39,7 +39,7 @@ end
 
 -- trim whitespace from right end of string
 function trimr(s)
-	if s ~= nil then
+	if type(s) ~= "string" then
 		return string.find(s,'%s*$') and '' or s:match(s,'^(.*%S)')
 	else
 		return s
