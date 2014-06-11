@@ -121,7 +121,7 @@ function maxval(tbl)
 		if type(k)=="number" then
 			mx=math.max(k,mx)
 		end
-	end	
+	end
 	return mx
 end
 function flipkv(t)
@@ -143,11 +143,11 @@ local hex2bint = {
 	["8"] = "1000",
 	["9"] = "1001",
 	["a"] = "1010",
-    ["b"] = "1011",
-    ["c"] = "1100",
-    ["d"] = "1101",
-    ["e"] = "1110",
-    ["f"] = "1111"
+	["b"] = "1011",
+	["c"] = "1100",
+	["d"] = "1101",
+	["e"] = "1110",
+	["f"] = "1111"
 }
 local bin2hext = flipkv(hex2bint)
 function hex2bin(s)
