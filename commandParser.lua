@@ -361,7 +361,7 @@ local function doCommand(oldcommand,nick,channel)
 			if funcSuccess then
 				return funcOutput
 			else
-				return "Error: Please open a issue at ]-['s Github: "..putHastebin(funcOutput).."."
+				return "Error: Please open an issue at ]-['s Github: "..putHastebin(funcOutput).."."
 			end
 		else
 			if commandNotFoundMessage then
@@ -381,11 +381,11 @@ function evalCommand(nick,channel,commandOld)
 		local cmdCount = 0
 		for commandItemOld in commandStriped:gmatch("[^|]+") do
 		--for commandItemOld in commandStriped:gmatch("[^\]|") do
-      		local commandItem = triml(triml(commandItemOld:gsub(escape_lua_pattern(escapingString),"|"))).." "
+      		local commandItem = triml(trimr(commandItemOld:gsub(escape_lua_pattern(escapingString),"|")))
 			cmdCount = cmdCount + 1
 			if cmdCount > 1 then
 				--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
-				output[cmdCount] = doCommand(triml(commandItem..output[cmdCount-1]),nick,channel)
+				output[cmdCount] = doCommand(triml(commandItem.." "..output[cmdCount-1]),nick,channel)
 			else
 				output[1] = doCommand(triml(commandItem),nick,channel)
 			end
