@@ -342,7 +342,7 @@ function initCommands()
 	commands["settopic"] = topicset
 end
 local function doCommand(oldcommand,nick,channel)
-	local command = triml(triml(oldcommand.." "))
+	local command = triml(triml(oldcommand)).." "
 	print("Command \”"..command.."\"")
 	local commandItems = {}
 	for commandItem in command:gmatch("%S+") do table.insert(commandItems, commandItem) end
