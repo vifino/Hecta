@@ -381,7 +381,7 @@ function evalCommand(nick,channel,commandOld)
 		local cmdCount = 0
 		for commandItemOld in commandStriped:gmatch("[^|]+") do
 		--for commandItemOld in commandStriped:gmatch("[^\]|") do
-      		local commandItem = triml(triml(commandItemOld:gsub(escape_lua_pattern(escapingString),"|")))
+      		local commandItem = triml(triml(commandItemOld:gsub(escape_lua_pattern(escapingString),"|"))).." "
 			cmdCount = cmdCount + 1
 			if cmdCount > 1 then
 				--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
