@@ -343,7 +343,7 @@ function initCommands()
 end
 local function doCommand(oldcommand,nick,channel)
 	local command = triml(triml(oldcommand)).." "
-	print("Command \”"..command.."\"")
+	print("Command \""..command.."\"")
 	local commandItems = {}
 	for commandItem in command:gmatch("%S+") do table.insert(commandItems, commandItem) end
 	local currentFunc = commands[string.lower(commandItems[1])]
@@ -377,25 +377,28 @@ function evalCommand(nick,channel,commandOld)
 	local command = commandOld:gsub(escape_lua_pattern("\\|"), escapingString)
 	local commandPiped = {}
 	local commandStriped = triml(triml(command))
-		local output = {}
-		local cmdCount = 0
-		for commandItemOld in commandStriped:gmatch("[^|]+") do
-		--for commandItemOld in commandStriped:gmatch("[^\]|") do
-      		local commandItem = triml(trimr(commandItemOld:gsub(escape_lua_pattern(escapingString),"|")))
-			cmdCount = cmdCount + 1
-			if cmdCount > 1 then
-				--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
-				output[cmdCount] = doCommand(triml(commandItem.." "..output[cmdCount-1]),nick,channel)
-			else
-				output[1] = doCommand(triml(commandItem),nick,channel)
-			end
-		end
-		if output[#output] ~= nil then
-			commandVars["last"] = triml(output[#output])
-			return triml(output[#output])
+	local output = {}
+	local cmdCount = 0
+	for commandItemOld in commandStriped:gmatch("[^|]+") do
+	--for commandItemOld in commandStriped:gmatch("[^|%s+]+") do
+    	local commandItem = trim(triml(trimr(commandItemOld:gsub(escape_lua_pattern(escapingString),"|"))))
+		local commandTable = splitToTable(commandItem,"%S+")
+		print(commandItem)
+		local commandItem = commandTable[1].." "..(triml(commandItem:gsub("^"..commandTable[1],""):sub(2)):gsub("^%s+",""):gsub("%s+^",""))
+		cmdCount = cmdCount + 1
+		if cmdCount > 1 then
+			--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
+			output[cmdCount] = doCommand(triml(commandItem..output[cmdCount-1]),nick,channel)
 		else
-			return ""
+			output[1] = doCommand(triml(commandItem),nick,channel)
 		end
+	end
+	if output[#output] ~= nil then
+		commandVars["last"] = triml(output[#output])
+		return triml(output[#output])
+	else
+		return ""
+	end
 end
 function evalFile(content,nick,channel)
 	local output = {}

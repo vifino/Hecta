@@ -63,7 +63,7 @@ function botLogic(line)
 					if funcSuccess then
 						returnVal = funcOutput
 					else
-						returnVal = "Error: Please open a issue at ]-['s Github: "..putHastebin(funcOutput).."."
+						returnVal = "Error: Please open an issue at ]-['s Github: "..putHastebin(funcOutput).."."
 					end
 				    --returnVal = evalCommand(user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
 				    returnTable = splitToTable(returnVal, "%S+")
@@ -75,7 +75,7 @@ function botLogic(line)
 					if funcSuccess then
 						returnVal = string.gsub(funcOutput,"[\r\n]", "|")
 					else
-						returnVal = "Error: Please open a issue at ]-['s Github: "..putHastebin(funcOutput).."."
+						returnVal = "Error: Please open an issue at ]-['s Github: "..putHastebin(funcOutput).."."
 					end
 				   -- returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)")),"[\r\n]", "|")
 				    returnTable = splitToTable(returnVal, "%S+")

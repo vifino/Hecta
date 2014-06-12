@@ -4,6 +4,7 @@ function splitToTable(text, seperator)
 	for word in text:gmatch(seperator) do table.insert(returnTable, word) end
 	return returnTable
 end
+string.splitToTable = splitToTable
 function concatTable(input, seperator)
 	local concatString = ""
 	if seperator ~= nil then
@@ -26,7 +27,7 @@ function trim(s)
 		return s
 	end
 end
-
+string.trim = trim
 -- trim whitespace from left end of string
 function triml(s)
 	if type(s) ~= "string" then
@@ -36,7 +37,7 @@ function triml(s)
 		return s
 	end
 end
-
+string.triml = triml
 -- trim whitespace from right end of string
 function trimr(s)
 	if type(s) ~= "string" then
@@ -45,6 +46,7 @@ function trimr(s)
 		return s
 	end
 end
+string.trimr = trimr
 local http = require("socket.http")
 function putHastebin(text)
 	if not text or text == "" then text = nil err = "Not enough arguments" end
@@ -80,6 +82,7 @@ function splitbyLines(text)
 	end
 	return returnTable
 end
+string.splitbyLines = splitbyLines
 function inTableKey(tablein,query)
     for i,v in pairs(tablein) do
        if i == query then return true end
