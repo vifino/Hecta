@@ -163,7 +163,10 @@ do
 					return err
 				end
 			end
-			local res={pcall(func)}
+			local corfunc=coroutine.create(function()
+				return {pcall(func)}
+			 end)
+			local _,res=coroutine.resume(corfunc)
 			local o
 			for l1=2,maxval(res) do
 				o=(o or "")..tostring(res[l1]).."\n"
