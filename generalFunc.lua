@@ -238,3 +238,6 @@ end
 function splitBySentence(text)
 	return string.split(text:gsub("\n",""):gsub("\r",""),"[^%.!?]*")
 end
+function sleep(sec)
+    socket.select(nil, nil, sec)
+end
