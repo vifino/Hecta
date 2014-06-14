@@ -41,6 +41,30 @@ function loadFiles()
 end
 loadFiles()
 server=socket.connect(address,port)
+function executeCommand(user,channel,txt)
+	local returnVal = ""
+	local returnTable = {}
+	local funcSuccess,funcOutput=pcall(evalCommand,user, channel, txt)
+	if funcSuccess then
+		returnVal = string.gsub(funcOutput,"[\r\n]", "|")
+	else
+		returnVal = "Error: Please open an issue at ]-['s Github: "..putHastebin(funcOutput).."."
+	end
+	print(returnVal)
+	returnTable = splitToTable(returnVal, "%S+")
+	if returnTable[1] ~= nil then
+		return returnVal
+	end
+end
+function commandHandeler(user,channel,txt)
+	local corfunc=coroutine.create(function()
+		return executeCommand(user,channel,txt)
+	end)
+	local _,result=coroutine.resume(corfunc)
+	print(_)
+	print(result)
+	if result then msg(channel,"> "..result) end
+end
 function botLogic(line)
 	local typemsg,user,channel,txt=getMsgType(line)
 	if typemsg == "msg" then
@@ -56,34 +80,12 @@ function botLogic(line)
 			end
 		elseif (txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)") and txt ~= "$") then
 			if isBlacklisted(user) then msg(channel,"> "..no()) else
-				local returnVal = ""
-				local returnTable = {}
 				print(channel)
 				print(user)
 				if channel == nickname then
-					local funcSuccess,funcOutput=pcall(evalCommand,user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
-					if funcSuccess then
-						returnVal = funcOutput
-					else
-						returnVal = "Error: Please open an issue at ]-['s Github: "..putHastebin(funcOutput).."."
-					end
-				    --returnVal = evalCommand(user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
-				    returnTable = splitToTable(returnVal, "%S+")
-				    if returnTable[1] ~= nil then
-				    	msg(user,"> "..returnVal)
-				    end
+					commandHandeler(user,user,txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
 				else
-					local funcSuccess,funcOutput=pcall(evalCommand,user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
-					if funcSuccess then
-						returnVal = string.gsub(funcOutput,"[\r\n]", "|")
-					else
-						returnVal = "Error: Please open an issue at ]-['s Github: "..putHastebin(funcOutput).."."
-					end
-				   -- returnVal = string.gsub(evalCommand(user, channel, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)")),"[\r\n]", "|")
-				    returnTable = splitToTable(returnVal, "%S+")
-				    if returnTable[1] ~= nil then
-					    msg(channel,"> "..returnVal)
-				    end
+					commandHandeler(user,channel,txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
 				end
 			end
 		end
