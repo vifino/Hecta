@@ -58,12 +58,10 @@ function executeCommand(user,channel,txt)
 end
 function commandHandeler(user,channel,txt)
 	local corfunc=coroutine.create(function()
-		return executeCommand(user,channel,txt)
+		local result = executeCommand(user,channel,txt)
+		if result then msg(channel,"> "..result) end
 	end)
-	local _,result=coroutine.resume(corfunc)
-	print(_)
-	print(result)
-	if result then msg(channel,"> "..result) end
+	coroutine.resume(corfunc)
 end
 function botLogic(line)
 	local typemsg,user,channel,txt=getMsgType(line)
