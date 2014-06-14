@@ -81,9 +81,9 @@ end
 function nickCMD(text,nick,channel)
 	if isPrivileged(nick) then
 		inputTable = splitToTable(text,"%S+")
-		if inputTable[1] then
+		if inputTable[1] ~= nil then
 			nickname = inputTable[1]
-			raw("NICK "..inputTable[1])
+			send("NICK "..inputTable[1])
 		else
 			return "Error: Not enough arguments."
 		end
