@@ -46,9 +46,7 @@ do
 			next=next,
 			pairs=pairs,
 			print=function(...)
-				for k,v in pairs({...}) do
-					out=out..tostring(v).."\n"
-				end
+				out=out ..table.concat({...}," ").."\n"
 			end,
 			select=select,
 			setfenv=function(func,env)

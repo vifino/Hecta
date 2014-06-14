@@ -383,8 +383,8 @@ function evalCommand(nick,channel,commandOld)
 	--for commandItemOld in commandStriped:gmatch("[^|%s+]+") do
     	local commandItem = trim(triml(trimr(commandItemOld:gsub(escape_lua_pattern(escapingString),"|"))))
 		local commandTable = splitToTable(commandItem,"%S+")
-		print(commandItem)
 		local commandItem = commandTable[1].." "..(triml(commandItem:gsub("^"..commandTable[1],""):sub(2)):gsub("^%s+",""):gsub("%s+^",""))
+		print(commandItem)
 		cmdCount = cmdCount + 1
 		if cmdCount > 1 then
 			--output[cmdCount] = doCommand(commandItem.." "..output[cmdCount-1],nick,channel)
