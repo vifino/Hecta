@@ -78,6 +78,20 @@ function raw(text,nick,channel, ...)
 	end
 end
 
+function nickCMD(text,nick,channel)
+	if isPrivileged(nick) then
+		inputTable = splitToTable(text,"%S+")
+		if inputTable[1] then
+			nickname = inputTable[1]
+			raw("NICK "..inputTable[1])
+		else
+			return "Error: Not enough arguments."
+		end
+	else
+		return no()
+	end
+end
+
 function message(text,nick,channel, ...)
 	local inputTable = splitToTable(text, "%S+")
 	if inputTable[1] and inputTable[2] then
@@ -340,6 +354,7 @@ function initCommands()
 	commands["dofile"] = doFile
 	commands["topic"] = topic
 	commands["settopic"] = topicset
+	commands["nick"] = nickCMD
 end
 local function doCommand(oldcommand,nick,channel)
 	local command = triml(triml(oldcommand)).." "

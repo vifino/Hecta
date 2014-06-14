@@ -58,7 +58,7 @@ function botLogic(line)
 			if isBlacklisted(user) then msg(channel,"> "..no()) else
 				local returnVal = ""
 				local returnTable = {}
-				if channel == nickname then
+				if channel == user then
 					local funcSuccess,funcOutput=pcall(evalCommand,user, user, txt:match("^"..escape_lua_pattern(commandPrefix).."(.*)"))
 					if funcSuccess then
 						returnVal = funcOutput
