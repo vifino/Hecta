@@ -12,7 +12,7 @@
 -- |\__/  |        |  \__/|   /  YOUR way  \
 -- \_____/          \_____/   \____________/
 -- Made by vifino
-local socket=require("socket")
+if not socket then socket=require("socket") end
 if not socket then error("Please install LuaSocket.") end
 if not root then root = arg[0]:gsub("hecta.lua","") end
 LastSaidline = ""
@@ -41,7 +41,7 @@ function loadFiles()
 	initCommands()
 end
 loadFiles()
-server=socket.connect(address,port)
+if not server then server=socket.connect(address,port) end
 function executeCommand(user,channel,txt)
 	local returnVal = ""
 	local returnTable = {}
