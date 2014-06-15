@@ -267,7 +267,7 @@ function exitCMD(text, nick, channel)
 	local inputTable = splitToTable(text, "%S+")
 	if isPrivileged(nick) then
 		send("QUIT :Shuting down...")
-		os.exit(0)
+		terminated = true
 		return ""
 	else
 		return no()
