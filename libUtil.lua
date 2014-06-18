@@ -6,7 +6,8 @@ function libUtil.loadDir(dir)
 	local libFiles = {}
 	for i,file in pairs(system.ls(dir)) do
 		print("-> "..file)
-		if file ~= ".DS_Store" then
+		--if file ~= ".DS_Store" and file ~= ".git" and file ~= "README.md"  then
+		if file:match("(.*)%.lua")  then
 			dofile(dir.."/"..file)
 		end
 	end

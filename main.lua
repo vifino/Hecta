@@ -23,6 +23,7 @@ while not exited do
 	if success then
 		local _,exited = pcall(startBot)
 	else
+		print("Error: "..error)
 		local f = assert(io.popen("cd "..root.." && git pull", 'r'))
 		local s = assert(f:read('*a'))
 		f:close()
