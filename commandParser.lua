@@ -268,6 +268,7 @@ function exitCMD(text, nick, channel)
 	if isPrivileged(nick) then
 		send("QUIT :Shuting down...")
 		terminated = true
+		os.exit(0)
 		return ""
 	else
 		return no()
