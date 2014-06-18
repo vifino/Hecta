@@ -32,7 +32,8 @@ end
 function loadFiles()
 	dofile(root.."settings.lua")
 	local oldUsername = username
-	dofile(root.."generalFunc.lua")
+	dofile(root.."functions.lua")
+	dofile(root.."libs/generalFunc.lua")
 	dofile(root.."libs/system.lua")
 	dofile(root.."libUtil.lua")
 	libUtil.loadDir(root.."libs")

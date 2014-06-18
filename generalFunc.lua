@@ -1,4 +1,5 @@
 -- General Functions: Useful collection
+
 function splitToTable(text, seperator)
 	local returnTable = {}
 	for word in text:gmatch(seperator) do table.insert(returnTable, word) end
