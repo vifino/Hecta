@@ -28,7 +28,7 @@ local exited = false
 while not exited do
 	local success,error= pcall(dofile,root.."hecta.lua")
 	if success then
-		if inputmode = "socket" then
+		if inputmode == "socket" then
 			local _,exited = pcall(startBot)
 		else -- WIP
 			io.popen("prog < $DIR/fifo |echo|lua $DIR/main.lua -p > $DIR/fifo"):gsub("prog",pipeConnector):gsub("$DIR/",root)
