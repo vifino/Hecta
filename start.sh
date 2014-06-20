@@ -1,6 +1,6 @@
 #!/bin/bash
-BINDIR=$(dirname "$(readlink -fn "$0")")
-cd "$BINDIR"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
 screen -S Hecta -X quit
-screen -AdmS Hecta lua main.lua
+screen -AdmS Hecta ./hecta
 echo "Started ]-[!"
