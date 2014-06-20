@@ -6,4 +6,5 @@ cd $DIR
 if [[ ! -f $DIR/fifo ]]; then
 	mkfifo fifo
 fi
-$1 < $DIR/fifo |lua $DIR/main.lua > fifo
+#$1 < $DIR/fifo |echo|lua $DIR/main.lua ${@:2} > fifo
+lua $DIR/main.lua $@

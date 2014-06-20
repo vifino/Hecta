@@ -13,7 +13,8 @@
 -- |\__/  |        |  \__/|   /  YOUR way  \
 -- \_____/          \_____/   \____________/
 -- Made by vifino
-inputmode = "pipe"
+inputmode = "socket"
+local pipeConnector = "nc irc.esper.net 5555"
 for _,text in pairs(arg) do
 	if text == "-s" then inputmode = "socket" end
 	if text == "-p" then inputmode = "pipe" end
@@ -27,7 +28,11 @@ local exited = false
 while not exited do
 	local success,error= pcall(dofile,root.."hecta.lua")
 	if success then
-		local _,exited = pcall(startBot)
+		if inputmode = "socket" then
+			local _,exited = pcall(startBot)
+		else -- WIP
+			io.popen("prog < $DIR/fifo |echo|lua $DIR/main.lua -p > $DIR/fifo"):gsub("prog",pipeConnector):gsub("$DIR/",root)
+		end
 	else
 		print("Error: "..error)
 		local f = assert(io.popen("cd "..root.." && git pull && git submodule update", 'r'))

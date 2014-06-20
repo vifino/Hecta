@@ -12,3 +12,5 @@ modules/markov.lua
 twinpipe
 
 usleep
+
+fifo
