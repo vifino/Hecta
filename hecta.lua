@@ -15,11 +15,32 @@
 if not socket then socket=require("socket") end
 if not socket then error("Please install LuaSocket.") end
 if not root then root = arg[0]:gsub("hecta.lua","") end
+if not inputmode then inputmode = "piping" end
 LastSaidline = ""
 loopCalls = {}
 terminated = false
+local print_old = print
+if inputmode == "piping" then
+	print = function(...)
+		io.stderr:write(table.concat({...}).."\n")
+	end
+end
+function receive_raw()
+	if inputmode == "socket" then
+		return server:receive()
+	elseif inputmode == "piping" then
+		return io.read()
+	end
+end
+function send(txt)
+	if inputmode == "socket" then
+		server:send(txt.."\r\n")
+	elseif inputmode == "piping" then
+		print(txt.."\n")
+	end
+end
 function receive()
-	local line=server:receive()
+	local line=receive_raw()
 	LastSaidline = line
 	if line:match("^PING") then
 		send(line:gsub("PING","PONG"))

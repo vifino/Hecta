@@ -1,8 +1,5 @@
 -- Functions for ]-[, provide basic IRC Functions
 -- Made by vifino
-function send(txt)
-	server:send(txt.."\r\n")
-end
 function getMsgType(line)
 	if line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)") then
 		local user,channel,action=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)")

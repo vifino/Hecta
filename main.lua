@@ -13,6 +13,12 @@
 -- |\__/  |        |  \__/|   /  YOUR way  \
 -- \_____/          \_____/   \____________/
 -- Made by vifino
+inputmode = "pipe"
+for _,text in pairs(arg) do
+	if text == "-s" then inputmode = "socket" end
+	if text == "-p" then inputmode = "pipe" end
+	if text == "-h" then print("Commandline Options: [-s | -p] [-h]") os.exit(0) end
+end -- Add legacy support once again.
 root = arg[0]:gsub("main.lua","")
 function sleep(sec)
     socket.select(nil, nil, sec)
@@ -24,7 +30,7 @@ while not exited do
 		local _,exited = pcall(startBot)
 	else
 		print("Error: "..error)
-		local f = assert(io.popen("cd "..root.." && git pull", 'r'))
+		local f = assert(io.popen("cd "..root.." && git pull && git submodule update", 'r'))
 		local s = assert(f:read('*a'))
 		f:close()
 		-- Do something with git output
