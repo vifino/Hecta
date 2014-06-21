@@ -133,7 +133,7 @@ function deadfishplus(input) -- is only improved, or extended deadfish
 			elseif char == "s" then
 				number = number * number
 			elseif char == "c" then
-				return string.char(number)
+				output = output..string.char(number)
 			elseif char = "r" then
 				number = 0
 			end
