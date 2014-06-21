@@ -6,7 +6,7 @@ echo "Updating to latest versiom..."
 git pull && git submodule init && git submodule update
 chmod +x hecta
 chmod +x *.sh
-cp settingsExample.lua settings.lua
+cp -n settingsExample.lua settings.lua
 #cd twinpipe && make
 #echo "You might need to install twinpipe. To do that, just cd to ./twinpipe, and run make install as root."
 #cd ..
