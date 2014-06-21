@@ -138,6 +138,8 @@ function deadfishplus(input) -- is only improved, or extended deadfish
 				output = output..string.char(number)
 				elseif char == "r" then
 					number = 0
+				elseif string.match(char,"[0-9]")
+					number = number + tonumber(char)
 				end
 			end)
 			return output
