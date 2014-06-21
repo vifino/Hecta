@@ -104,13 +104,13 @@ function deadfish(input)
 		local number = 0
 		string.gsub(input,".",function(char)
 			if char == "d" then
-				no = no - 1
+				number = number - 1
 			elseif char == "i" then
-				no = no + 1
+				number = number + 1
 			elseif char == "o" then
 				output = output..tostring(no)
 			elseif char == "s" then
-				no = no * no
+				number = number * number
 			end
 		end)
 		return output
