@@ -103,6 +103,7 @@ function deadfish(input)
 		local output = ""
 		local number = 0
 		string.gsub(input,".",function(char)
+			if number > 256 or number < 0 then number = 0 end
 			if char == "d" then
 				number = number - 1
 			elseif char == "i" then
@@ -117,3 +118,27 @@ function deadfish(input)
 	end
 end
 commands["deadfish"] = deadfish
+function deadfishplus(input) -- is only improved, or extended deadfish
+	if type(input) == "string" then
+		local output = ""
+		local number = 0
+		string.gsub(input,".",function(char)
+			if number > 256 or number < 0 then number = 0 end
+			if char == "d" then
+				number = number - 1
+			elseif char == "i" then
+				number = number + 1
+			elseif char == "o" then
+				output = output..tostring(number)
+			elseif char == "s" then
+				number = number * number
+			elseif char == "c" then
+				return string.char(number)
+			elseif char = "r" then
+				number = 0
+			end
+		end)
+		return output
+	end
+end
+commands["deadfish+"] = deadfishplus
