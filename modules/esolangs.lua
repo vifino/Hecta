@@ -157,15 +157,15 @@ function dfpencoder(input)
 		local relative = string.byte(char) - currentnum
 		if relative > 0 then -- Positive
 			local nines = relative % 9
-			output = string.rep("9", nines)
+			output = output..string.rep("9", nines)
 			currentnum = 9 * nines
 			local relative = string.byte(char) - currentnum
-			output = string.rep("i",relative).."c"
+			output = output..string.rep("i",relative).."c"
 		else --Negative
 			local relative = math.abs(relative)
-			output = string.rep("d",relative).."c"
+			output = output..string.rep("d",relative).."c"
 		end
 	end)
 	return output
 end
-commands["df+enc"] = dfpenc
+commands["df+enc"] = dfpencoder
