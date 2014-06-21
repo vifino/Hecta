@@ -160,6 +160,7 @@ function dfpencoder(input)
 			--output = output..string.rep("9", nines)
 			--currentnum = currentnum + (9 * nines)
 			local relative = string.byte(char) - currentnum
+			currentnum = currentnum + relative
 			output = output..string.rep("i",relative).."c"
 		else --Negative
 			local relative = math.abs(relative)
