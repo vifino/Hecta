@@ -82,7 +82,13 @@ end
 function commandHandeler(user,channel,txt)
 	local corfunc=coroutine.create(function()
 		local result = executeCommand(user,channel,txt)
-		if result then msg(channel,"> "..result) end
+		if result then 
+			if isPrivileged(user) then
+				msg(channel,"> "..result) 
+			else
+				msg(channel,"> "..result:sub(1,256)) 
+			end
+		end
 	end)
 	coroutine.resume(corfunc)
 end
