@@ -156,7 +156,7 @@ function dfpencoder(input)
 	string.gsub(input,".",function(char)
 		local relative = string.byte(char) - currentnum
 		if relative > 0 then -- Positive
-			local nines = relative % 9
+			local nines = relative - math.floor(relative/9)*9
 			output = output..string.rep("9", nines)
 			currentnum = currentnum + (9 * nines)
 			local relative = string.byte(char) - currentnum
