@@ -140,6 +140,7 @@ function deadfishplus(input) -- is only improved, or extended deadfish
 					number = 0
 				end
 			end)
+			return output
 		end
 		return eval(input)
 	end
