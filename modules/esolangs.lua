@@ -151,18 +151,19 @@ commands["deadfish+"] = deadfishplus
 commands["df+"] = deadfishplus
 function dfpencoder(input)
 	local base = 81
-	local output = "9so"
+	local output = "9s"
 	local currentnum = base
 	string.gsub(input,".",function(char)
 		local relative = string.byte(char) - currentnum
 		if relative > 0 then -- Positive
 			local nines = relative % 9
 			output = output..string.rep("9", nines)
-			currentnum = 9 * nines
+			currentnum = currentnum + (9 * nines)
 			local relative = string.byte(char) - currentnum
 			output = output..string.rep("i",relative).."c"
 		else --Negative
 			local relative = math.abs(relative)
+			currentnum = currentnum - relative
 			output = output..string.rep("d",relative).."c"
 		end
 	end)
