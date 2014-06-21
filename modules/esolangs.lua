@@ -108,7 +108,7 @@ function deadfish(input)
 			elseif char == "i" then
 				number = number + 1
 			elseif char == "o" then
-				output = output..tostring(no)
+				output = output..tostring(number)
 			elseif char == "s" then
 				number = number * number
 			end
