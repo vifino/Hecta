@@ -102,7 +102,7 @@ function deadfish(input)
 	if type(input) == "string" then
 		local output = ""
 		local number = 0
-		string.gsub(input,function(char)
+		string.gsub(input,,".",function(char)
 			if char == "d" then
 				no = no - 1
 			elseif char == "i" then
