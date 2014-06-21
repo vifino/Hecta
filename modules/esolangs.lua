@@ -149,3 +149,23 @@ function deadfishplus(input) -- is only improved, or extended deadfish
 end
 commands["deadfish+"] = deadfishplus
 commands["df+"] = deadfishplus
+function dfpencoder(input)
+	local base = 81
+	local output = "9so"
+	local currentnum = base
+	string.gsub(input,".",function(char)
+		local relative = string.byte(char) - currentnum
+		if relative > 0 then -- Positive
+			local nines = relative % 9
+			output = string.rep("9", nines)
+			currentnum = 9 * nines
+			local relative = string.byte(char) - currentnum
+			output = string.rep("i",relative).."c"
+		else --Negative
+			local relative = math.abs(relative)
+			output = string.rep("d",relative).."c"
+		end
+	end)
+	return output
+end
+commands["df+enc"] = dfpenc
