@@ -209,8 +209,9 @@ function dfpencoder(input)
 	return output
 end
 commands["df+enc"] = dfpencoder
+local swagStorage = {}
 function swaglang(input)
-	local swagStorage = {}
+	local output = ""
 	local currentCell = 0
 	local number = 0
 	local charbuff = ""
@@ -219,7 +220,6 @@ function swaglang(input)
 	local partString = ""
 	local interpretedString = "local output2 = \"\" local out = \"\" local number = 0 output2=output2..out out,number = evalswag(\""
 	function evalswag(input) 
-		local output
 		string.gsub(string.lower(input),".",function(char)
 			if number > 255 or number < 0 then number = 0 end
 			if currentCell > 255 or currentCell < 0 then currentCell = 0 end
@@ -245,6 +245,8 @@ function swaglang(input)
 				currentCell = currentCell - 1
 			elseif char == "?" then
 				if number == swagStorage[currentCell] then number = 1 else number = 0 end
+			elseif char == ":" then
+				output = output .. tostring(number)
 			end
 		end)
 		return output,number
@@ -274,6 +276,25 @@ function swaglang(input)
 	local func=coroutine.create(func)
 	debug.sethook(func,function() error("Time limit exeeded.",0) end,"",200000)
 	local err,res=coroutine.resume(func)
-	evalswag = nil
 	return output
 end
+commands["swaglang"] = swaglang
+function swagcoder(input)
+	local base = 81
+	local output = "9s"
+	local currentnum = base
+	string.gsub(input,".",function(char)
+		local relative = string.byte(char) - currentnum
+		if relative > 0 then -- Positive
+			local relative = string.byte(char) - currentnum
+			currentnum = currentnum + relative
+			output = output..string.rep("+",relative)..":"
+		else --Negative
+			local relative = math.abs(relative)
+			currentnum = currentnum - relative
+			output = output..string.rep("-",relative)..":"
+		end
+	end)
+	return output
+end
+commands["swagcoder"] = swagcoder
