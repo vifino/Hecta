@@ -218,7 +218,7 @@ function swaglang(input)
 	local finalOut = ""
 	local number = 0
 	local partString = ""
-	local interpretedString = "local output2 = \"\" local out = \"\" local number = 0 output2=output2..out out,number = evalswag(\""
+	local interpretedString = "local output2 = \"\" local out = \"\" local number = 0 output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
 	function evalswag(input) 
 		string.gsub(string.lower(input),".",function(char)
 			if number > 255 or number < 0 then number = 0 end
@@ -243,37 +243,43 @@ function swaglang(input)
 				currentCell = currentCell + 1
 			elseif char == "<" then
 				currentCell = currentCell - 1
-			elseif char == "?" then
+			elseif char == "=" then
 				if number == swagStorage[currentCell] then number = 1 else number = 0 end
 			elseif char == ":" then
 				output = output .. tostring(number)
 			end
 		end)
-		return output,number
+		return number,output,currentCell,swagStorage
 	end
 	string.gsub(string.lower(input),".",function(char)
 		if char == "[" then
-			interpretedString = interpretedString .. "\") for i=1,number,1 do output2=output2..out out,number = evalswag(\""
+			interpretedString = interpretedString .. "\") for i=1,number,1 do output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
 			partString = ""
 		elseif char == "]" then
-			interpretedString = interpretedString.."\") end output2=output2..out out,number = evalswag(\""
+			interpretedString = interpretedString.."\") end output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
 		elseif char == "{" then
-			interpretedString = interpretedString .. "\") while number > 1 do output2=output2..out out,number = evalswag(\""
+			interpretedString = interpretedString .. "\") while number > 1 do output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
 			partString = ""
 		elseif char == "}" then
-			interpretedString = interpretedString.."\") end output2=output2..out out,number = evalswag(\""
+			interpretedString = interpretedString.."\") end output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
+		elseif char == "?" then
+			interpretedString = interpretedString .. "\") if swagStorage[currentCell] == number then output2=output2..out number,out,currentCell,SwagStorage = evalswag(\""
+		elseif char == "." then
+			interpretedString = interpretedString .."\") end output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
+		elseif char == "!" then
+			interpretedString = interpretedString .. "\") else output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
 		else
 			interpretedString = interpretedString .. char
 		end
 	end)
-	interpretedString = interpretedString .. "\") return output2"
+	interpretedString = interpretedString .. "\") output2=output2..out print(swagStorage[currentCell]) return output2"
 	print(interpretedString)
 	local func,err=loadstring(interpretedString)
 	if not func then
 		return err
 	end
-	--local func=coroutine.create(setfenv(func,_G))
-	local func=coroutine.create(func)
+	local func=coroutine.create(setfenv(func,_G))
+	--local func=coroutine.create(func)
 	debug.sethook(func,function() error("Time limit exeeded.",0) end,"",200000)
 	local err,res=coroutine.resume(func)
 	return output
