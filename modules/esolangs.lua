@@ -288,11 +288,11 @@ function swagcoder(input)
 		if relative > 0 then -- Positive
 			local relative = string.byte(char) - currentnum
 			currentnum = currentnum + relative
-			output = output..string.rep("+",relative)..":"
+			output = output..string.rep("+",relative)..";"
 		else --Negative
 			local relative = math.abs(relative)
 			currentnum = currentnum - relative
-			output = output..string.rep("-",relative)..":"
+			output = output..string.rep("-",relative)..";"
 		end
 	end)
 	return output
