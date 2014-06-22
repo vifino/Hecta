@@ -390,7 +390,7 @@ local function doCommand(oldcommand,nick,channel)
 
 end
 function evalCommand(nick,channel,commandOld)
-	local command = commandOld:gsub(escape_lua_pattern("\\|"), escapingString)
+	local command = commandOld:gsub(escape_lua_pattern("\\|"), escapingString).." "
 	local commandPiped = {}
 	local commandStriped = triml(triml(command))
 	local output = {}
@@ -399,7 +399,7 @@ function evalCommand(nick,channel,commandOld)
 	--for commandItemOld in commandStriped:gmatch("[^|%s+]+") do
     	local commandItem = trim(triml(trimr(commandItemOld:gsub(escape_lua_pattern(escapingString),"|"))))
 		local commandTable = splitToTable(commandItem,"%S+")
-		local commandItem = commandTable[1].." "..(triml(commandItem:gsub("^"..commandTable[1],""):sub(2)):gsub("^%s+",""):gsub("%s+^",""))
+		local commandItem = commandTable[1].." "..(triml(commandItem:gsub("^"..escape_lua_pattern(commandTable[1]),"")):gsub("^%s+",""):gsub("%s+^",""))
 		print(commandItem)
 		cmdCount = cmdCount + 1
 		if cmdCount > 1 then
