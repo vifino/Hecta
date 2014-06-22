@@ -162,6 +162,11 @@ function deadfishplus(input) -- is only improved, or extended deadfish
 				partString = ""
 			elseif char == "]" then
 				interpretedString = interpretedString.."\") end output2=output2..out out,number = evaldfp(\""
+			elseif char == "{" then
+				interpretedString = interpretedString .. "\") while number > 1 do output2=output2..out out,number = evaldfp(\""
+				partString = ""
+			elseif char == "}" then
+				interpretedString = interpretedString.."\") end output2=output2..out out,number = evaldfp(\""
 			else
 				interpretedString = interpretedString .. char
 			end
