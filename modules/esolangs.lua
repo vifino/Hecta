@@ -247,6 +247,10 @@ function swaglang(input)
 				if number == swagStorage[currentCell] then number = 1 else number = 0 end
 			elseif char == ":" then
 				output = output .. tostring(number)
+			elseif char == "d" then
+				number = number + number
+			elseif char == "h" then
+				number = number / 2
 			end
 		end)
 		return number,output,currentCell,swagStorage
