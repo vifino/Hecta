@@ -234,7 +234,7 @@ function swaglang(input)
 			elseif char == "#" then
 				swagStorage[currentCell] = number
 			elseif char == "*" then
-				swagStorage[currentCell] = 0
+				number = 0
 			elseif string.match(char,"[0-9]") then
 				currentCell = tonumber(char)
 			elseif char == "_" then
