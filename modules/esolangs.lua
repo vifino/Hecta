@@ -209,3 +209,71 @@ function dfpencoder(input)
 	return output
 end
 commands["df+enc"] = dfpencoder
+function swaglang(input)
+	local swagStorage = {}
+	local currentCell = 0
+	local number = 0
+	local charbuff = ""
+	local finalOut = ""
+	local number = 0
+	local partString = ""
+	local interpretedString = "local output2 = \"\" local out = \"\" local number = 0 output2=output2..out out,number = evalswag(\""
+	function evalswag(input) 
+		local output
+		string.gsub(string.lower(input),".",function(char)
+			if number > 255 or number < 0 then number = 0 end
+			if currentCell > 255 or currentCell < 0 then currentCell = 0 end
+			if char == "-" then
+				number = number - 1
+			elseif char == "+" then
+				number = number + 1
+			elseif char == ";" then
+				output = output..string.char(number)
+			elseif char == "^" then
+				number = number * number
+			elseif char == "#" then
+				swagStorage[currentCell] = number
+			elseif char == "*" then
+				swagStorage[currentCell] = 0
+			elseif string.match(char,"[0-9]") then
+				currentCell = tonumber(char)
+			elseif char == "_" then
+				number = swagStorage[currentCell] or 0
+			elseif char == ">" then
+				currentCell = currentCell + 1
+			elseif char == "<" then
+				currentCell = currentCell - 1
+			elseif char == "?" then
+				if number == swagStorage[currentCell] then number = 1 else number = 0 end
+			end
+		end)
+		return output,number
+	end
+	string.gsub(string.lower(input),".",function(char)
+		if char == "[" then
+			interpretedString = interpretedString .. "\") for i=1,number,1 do output2=output2..out out,number = evalswag(\""
+			partString = ""
+		elseif char == "]" then
+			interpretedString = interpretedString.."\") end output2=output2..out out,number = evalswag(\""
+		elseif char == "{" then
+			interpretedString = interpretedString .. "\") while number > 1 do output2=output2..out out,number = evalswag(\""
+			partString = ""
+		elseif char == "}" then
+			interpretedString = interpretedString.."\") end output2=output2..out out,number = evalswag(\""
+		else
+			interpretedString = interpretedString .. char
+		end
+	end)
+	interpretedString = interpretedString .. "\") return output2"
+	print(interpretedString)
+	local func,err=loadstring(interpretedString)
+	if not func then
+		return err
+	end
+	--local func=coroutine.create(setfenv(func,_G))
+	local func=coroutine.create(func)
+	debug.sethook(func,function() error("Time limit exeeded.",0) end,"",200000)
+	local err,res=coroutine.resume(func)
+	evalswag = nil
+	return output
+end
