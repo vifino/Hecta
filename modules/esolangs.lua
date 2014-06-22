@@ -219,8 +219,13 @@ function swaglang(input)
 	local number = 0
 	local partString = ""
 	local interpretedString = "local output2 = \"\" local out = \"\" local number = 0 output2=output2..out number,out,currentCell,swagStorage = evalswag(\""
+	function round(val, idp)
+		local mult = 10 ^ (idp or 0)
+		return math.floor(val * mult - 0.5) / mult
+	end
 	function evalswag(input) 
 		string.gsub(string.lower(input),".",function(char)
+			number = round(number)
 			if number > 255 or number < 0 then number = 0 end
 			if currentCell > 255 or currentCell < 0 then currentCell = 0 end
 			if char == "-" then
@@ -252,6 +257,7 @@ function swaglang(input)
 			elseif char == "h" then
 				number = number / 2
 			end
+			number = round(number)
 		end)
 		return number,output,currentCell,swagStorage
 	end
