@@ -281,7 +281,7 @@ end
 commands["swaglang"] = swaglang
 function swagcoder(input)
 	local base = 81
-	local output = "9s"
+	local output = "+++++++++^"
 	local currentnum = base
 	string.gsub(input,".",function(char)
 		local relative = string.byte(char) - currentnum
