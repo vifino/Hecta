@@ -103,7 +103,7 @@ function deadfish(input)
 		local output = ""
 		local number = 0
 		string.gsub(input,".",function(char)
-			if number > 256 or number < 0 then number = 0 end
+			if number > 255 or number < 0 then number = 0 end
 			if char == "d" then
 				number = number - 1
 			elseif char == "i" then
@@ -121,10 +121,12 @@ commands["deadfish"] = deadfish
 commands["df"] = deadfish
 function deadfishplus(input) -- is only improved, or extended deadfish
 	if type(input) == "string" then
-		local function eval(input) 
-			local output = ""
-			local number = 0
-			string.gsub(input:lower(),".",function(char)
+		local output = ""
+		local number = 0
+		local partString = ""
+		local interpretedString = "local output2 = \"\" local out = \"\" local number = 0 output2=output2..out out,number = evaldfp(\""
+		function evaldfp(input) 
+			string.gsub(string.lower(input),".",function(char)
 				if number > 255 or number < 0 then number = 0 end
 				if char == "d" then
 					number = number - 1
@@ -142,9 +144,40 @@ function deadfishplus(input) -- is only improved, or extended deadfish
 					number = number + tonumber(char)
 				end
 			end)
-			return output
+			print(number)
+			print(type(number))
+			return output,number
 		end
-		return eval(input)
+		string.gsub(string.lower(input),".",function(char)
+			--[[if char == "[" then
+				interpretedString = interpretedString .. "\") for i=0,number,1 do output2=output2..out out,number = evaldfp(\""
+				partString = ""
+			elseif char == "]" then
+				interpretedString = interpretedString.."\") end output2=output2..out out,number = evaldfp(\""
+			else
+				interpretedString = interpretedString .. char
+			end]]
+			if char == "[" then
+				interpretedString = interpretedString .. "\") for i=1,number,1 do output2=output2..out out,number = evaldfp(\""
+				partString = ""
+			elseif char == "]" then
+				interpretedString = interpretedString.."\") end output2=output2..out out,number = evaldfp(\""
+			else
+				interpretedString = interpretedString .. char
+			end
+		end)
+		interpretedString = interpretedString .. "\") return output2"
+		print(interpretedString)
+		local func,err=loadstring(interpretedString)
+		if not func then
+			return err
+		end
+		--local func=coroutine.create(setfenv(func,_G))
+		local func=coroutine.create(func)
+		debug.sethook(func,function() error("Time limit exeeded.",0) end,"",200000)
+		local err,res=coroutine.resume(func)
+		evaldfp = nil
+		return output
 	end
 end
 commands["deadfish+"] = deadfishplus
