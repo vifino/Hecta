@@ -14,11 +14,14 @@ function getMsgType(line)
 		local user,channel,message=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :(.*)")
 		return "msg",user,channel,message
 	elseif line:match(":(%S+)!%S+@%S+ NOTICE (.-) :(.*)") then
-		local user,to,notice=line:match(":(%S+)!%S+@%S+ NOTICE (.-) :(.*)")
+		local user,to,notice=line:match(":()!%S+@%S+ NOTICE (.-) :(.*)")
 		return "notice",user,nil,notice
 	elseif line:match(":(%S+)!%S+@%S+ NICK :(.*)") then
 		local user,newnick=line:match(":(%S+)!%S+@%S+ NICK :(.*)")
 		return "nickChange",user,nil,newnick
+	elseif line:match("^:(%S+)!(%S+)@(%S+) MODE (%S+) (%S+) (.*)") then
+		local issuer,_,_,channel,mode,nick = line:match("^:(%S+)!(%S+)@(%S+) MODE (%S+) (%S+) (.*)")
+		return "mode",nick,channel,mode
 	end
 end
 function printPretty(line)
@@ -37,6 +40,9 @@ function printPretty(line)
 	elseif line:match(":(%S+)!%S+@%S+ NICK :(.*)") then
 		local user,newnick=line:match(":(%S+)!%S+@%S+ NICK :(.*)")
 		print("User "..user.." is now known as "..newnick)
+	elseif line:match("^:(%S+)!(%S+)@(%S+) MODE (%S+) (%S+) (.*)") then
+		local issuer,_,_,channel,mode,nick = line:match("^:(%S+)!(%S+)@(%S+) MODE (%S+) (%S+) (.*)")
+		print(issuer.." sets mode "..mode.." "..nick)
 	else
 		print(line)
 	end
