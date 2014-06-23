@@ -225,7 +225,6 @@ function swaglang(input)
 	end
 	function evalswag(input) 
 		string.gsub(string.lower(input),".",function(char)
-			number = round(number,0)
 			if number > 255 or number < 0 then number = 0 end
 			if currentCell > 255 or currentCell < 0 then currentCell = 0 end
 			if char == "-" then
@@ -243,7 +242,7 @@ function swaglang(input)
 			elseif string.match(char,"[0-9]") then
 				currentCell = tonumber(char)
 			elseif char == "_" then
-				number = swagStorage[currentCell] or 0
+				number = number + swagStorage[currentCell] or 0
 			elseif char == ">" then
 				currentCell = currentCell + 1
 			elseif char == "<" then
@@ -257,7 +256,7 @@ function swaglang(input)
 			elseif char == "h" then
 				number = number / 2
 			end
-			--number = round(number)
+			number = round(number)
 		end)
 		return number,output,currentCell,swagStorage
 	end
