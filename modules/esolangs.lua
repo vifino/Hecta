@@ -227,17 +227,17 @@ function swaglang(input)
 		string.gsub(string.lower(input),".",function(char)
 			if number > 255 or number < 0 then number = 0 end
 			if currentCell > 255 or currentCell < 0 then currentCell = 0 end
-			if char == "-" then
+			if char == "-" then -- Decrease
 				number = number - 1
-			elseif char == "+" then
+			elseif char == "+" then -- Increase
 				number = number + 1
-			elseif char == ";" then
+			elseif char == ";" then -- Print as ascii char
 				output = output..string.char(number)
-			elseif char == "^" then
+			elseif char == "^" then -- Sqare
 				number = number * number
-			elseif char == "#" then
+			elseif char == "#" then -- Write to memcell
 				swagStorage[currentCell] = number
-			elseif char == "*" then
+			elseif char == "r" then -- reset workcell
 				number = 0
 			elseif string.match(char,"[0-9]") then
 				currentCell = tonumber(char)
