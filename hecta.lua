@@ -63,7 +63,12 @@ function loadFiles()
 	initCommands()
 end
 loadFiles()
-if not server then server=socket.connect(address,port) end
+local function init()
+	if not server then server=socket.connect(address,port) end
+	send("NICK "..username)
+	send("USER "..username .." ~ ~ :I am a robot")
+	joinChannels()
+end
 function executeCommand(user,channel,txt)
 	local returnVal = ""
 	local returnTable = {}
@@ -119,8 +124,6 @@ function botLogic(line)
 	end
 end
 seed()
-send("NICK "..username)
-send("USER "..username .." ~ ~ :I am a robot")
 local modeset = false
 while not modeset do
 	local line = receive()
@@ -147,8 +150,8 @@ if password ~= nil then
 		send("NICK "..nickname)
 	end
 end
-joinChannels()
 function startBot()
+	init()
 	while true do
 		line=receive()
 		printPretty(line)
