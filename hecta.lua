@@ -16,10 +16,17 @@ if not socket then socket=require("socket") end
 if not socket then error("Please install LuaSocket.") end
 if not root then root = arg[0]:gsub("hecta.lua","") end
 if not inputmode then inputmode = "socket" end
+local server = nil
 LastSaidline = ""
 loopCalls = {}
 terminated = false
 local print_old = print
+function init()
+	if not server then server=socket.connect(address,port) end
+	send("NICK "..username)
+	send("USER "..username .." ~ ~ :I am a robot")
+	joinChannels()
+end
 if inputmode == "piping" then
 	print = function(...)
 		io.stderr:write(table.concat({...}).."\n")
@@ -63,12 +70,11 @@ function loadFiles()
 	initCommands()
 end
 loadFiles()
-local function init()
-	if not server then server=socket.connect(address,port) end
-	send("NICK "..username)
-	send("USER "..username .." ~ ~ :I am a robot")
-	joinChannels()
-end
+if not server then server=socket.connect(address,port) end
+send("NICK "..username)	
+send("USER "..username .." ~ ~ :I am a robot")
+
+--init()
 function executeCommand(user,channel,txt)
 	local returnVal = ""
 	local returnTable = {}
@@ -150,8 +156,8 @@ if password ~= nil then
 		send("NICK "..nickname)
 	end
 end
+joinChannels()
 function startBot()
-	init()
 	while true do
 		line=receive()
 		printPretty(line)
