@@ -59,6 +59,7 @@ do
 			tostring=tostring,
 			type=type,
 			xpcall=xpcall,
+			setmetatable=setmetatable,
 			os={
 				clock=os.clock,
 				date=os.date,
