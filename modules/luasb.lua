@@ -60,6 +60,9 @@ do
 			type=type,
 			xpcall=xpcall,
 			setmetatable=setmetatable,
+			unpack = function(t)
+				return unpack(t) or {}
+			end
 			os={
 				clock=os.clock,
 				date=os.date,
