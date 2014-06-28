@@ -63,6 +63,9 @@ do
 			unpack = function(t)
 				return unpack(t) or {}
 			end,
+			rawget = rawget,
+			--rawset = rawset,
+			rawequal = rawequal,
 			os={
 				clock=os.clock,
 				date=os.date,
