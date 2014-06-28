@@ -46,7 +46,11 @@ do
 			next=next,
 			pairs=pairs,
 			print=function(...)
-				out=out ..table.concat({...}," ").."\n"
+				local newt
+				for k,v in pairs({...}) do
+					newt[k] = tostring(v)
+				end
+				out=out ..tostring(table.concat(newt," ")).."\n"
 			end,
 			select=select,
 			setfenv=function(func,env)
