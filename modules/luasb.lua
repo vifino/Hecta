@@ -62,7 +62,7 @@ do
 			setmetatable=setmetatable,
 			unpack = function(t)
 				return unpack(t) or {}
-			end
+			end,
 			os={
 				clock=os.clock,
 				date=os.date,
