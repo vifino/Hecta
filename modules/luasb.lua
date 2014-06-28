@@ -61,7 +61,7 @@ do
 			xpcall=xpcall,
 			setmetatable=setmetatable,
 			unpack = function(t)
-				return unpack(t) or {}
+				return unpack(t)
 			end,
 			rawget = rawget,
 			--rawset = rawset,
