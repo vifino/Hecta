@@ -46,7 +46,7 @@ do
 			next=next,
 			pairs=pairs,
 			print=function(...)
-				local newt
+				local newt = {}
 				for k,v in pairs({...}) do
 					newt[k] = tostring(v)
 				end
