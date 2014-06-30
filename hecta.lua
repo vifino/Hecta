@@ -163,7 +163,12 @@ function startBot()
 		printPretty(line)
 		botLogic(line)
 		for i,func in pairs(loopCalls) do
-		   func(line)
+			if func then
+				local success,err = func(line)
+				if not success then
+					print(err)
+				end
+			end
 		end
 		if terminated then
 			return true
