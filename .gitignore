@@ -15,3 +15,5 @@ usleep
 
 fifo
 modules/s-slash.lua
+
+modules/shrek.lua

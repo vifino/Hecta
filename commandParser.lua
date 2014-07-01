@@ -257,7 +257,7 @@ function repeatCommand(text,nick,channel, ...)
 			return "Error: Text is not a number!"
 		end
 	else
-		-- Missing ;
+		-- Missing :
 		return "Error: Colon not found!"
 	end
 end
@@ -266,7 +266,7 @@ end
 function exitCMD(text, nick, channel)
 	local inputTable = splitToTable(text, "%S+")
 	if isPrivileged(nick) then
-		send("QUIT :Shuting down...")
+		send("QUIT :Shutting down...")
 		terminated = true
 		os.exit(0)
 		return ""

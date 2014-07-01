@@ -30,6 +30,9 @@ while not exited do
 	if success then
 		if inputmode == "socket" then
 			local _,exited = pcall(startBot)
+			if _ then
+				os.exit()
+			end
 		else -- WIP
 			io.popen("prog < $DIR/fifo |echo|lua $DIR/main.lua -p > $DIR/fifo"):gsub("prog",pipeConnector):gsub("$DIR/",root)
 		end
