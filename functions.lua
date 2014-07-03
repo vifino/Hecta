@@ -1,7 +1,7 @@
 -- Functions for ]-[, provide basic IRC Functions
 -- Made by vifino
 function getMsgType(line)
-	if line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)") then
+	if line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :\01ACTION(.*)") then
 		local user,channel,action=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)")
 		print("* "..user..action)
 		return "action",user,channel,action
@@ -25,12 +25,12 @@ function getMsgType(line)
 	end
 end
 function printPretty(line)
-	if line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)") then
+	if line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :\01ACTION(.*)") then
 		local user,channel,action=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)")
 		print("* "..user..action)
 	elseif line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :PING (.*)") then
-			local user,channel,pingmsg=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :PING (.*)")
-			msg(use, "PONG "..pingmsg)
+		local user,channel,pingmsg=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :PING (.*)")
+		msg(use, "PONG "..pingmsg)
 	elseif line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :(.*)") then
 		local user,channel,message=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :(.*)")
 		print(user.." -> "..channel..": "..message)
@@ -84,14 +84,16 @@ function part( channel )
 	--table.insert(channels,channel)
 	send("PART "..channel)
 end
-function msg(channel, msg)
-	if (channel and msg) then
-		local newmsg = msg
+function msg(channel, oldmsg)
+	if (channel and oldmsg) then
+		local newmsg = oldmsg
 		--local newmsg = msg:gsub("[\r\n]", "|")
 		local privmsgStr = "PRIVMSG "..channel.." :"
-		for i,item in pairs(splitn(newmsg,512-#privmsgStr-50)) do
-			print(username.." -> "..channel..": "..item)
-			send("PRIVMSG "..channel.." :"..item)
+		for i,msg in pairs(splitbyLines(newmsg)) do
+			for i,item in pairs(splitn(msg,512-#privmsgStr-50)) do
+				print(username.." -> "..channel..": "..item)
+				send("PRIVMSG "..channel.." :"..item)
+			end
 		end
 	else
 		print("Error: Not enough arguments.")
