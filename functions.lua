@@ -2,7 +2,7 @@
 -- Made by vifino
 function getMsgType(line)
 	if line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :\01ACTION(.*)") then
-		local user,channel,action=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)")
+		local user,channel,action=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :\01ACTION(.*)")
 		print("* "..user..action)
 		return "action",user,channel,action
 	elseif line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :PING (.*)") then
@@ -26,7 +26,7 @@ function getMsgType(line)
 end
 function printPretty(line)
 	if line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :\01ACTION(.*)") then
-		local user,channel,action=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :ACTION(.*)")
+		local user,channel,action=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :\01ACTION(.*)")
 		print("* "..user..action)
 	elseif line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :PING (.*)") then
 		local user,channel,pingmsg=line:match(":(%S+)!%S+@%S+ PRIVMSG (.-) :PING (.*)")
