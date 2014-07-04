@@ -372,13 +372,15 @@ local function doCommand(oldcommand,nick,channel)
 			end
 		end
 		local argString = string.sub(command,string.len(commandItems[1])+2)
-		if currentFunc ~= nil then
+		if type(currentFunc) == "function" then
 			local funcSuccess,funcOutput=pcall(currentFunc,argString,nick,channel,unpack(argTable))
 			if funcSuccess then
 				return funcOutput
 			else
 				return "Error: Please open an issue at ]-['s Github: "..putHastebin(funcOutput).."."
 			end
+		elseif type(currentFunc) == "string" then
+			return currentFunc
 		else
 			if commandNotFoundMessage then
 				return "Command \""..commandItems[1].."\" doesn\'t exist."
