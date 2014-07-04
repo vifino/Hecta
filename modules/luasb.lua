@@ -154,9 +154,9 @@ do
 		debug.sethook(func,function()
 			debug.sethook(func)
 			debug.sethook(func,function()
-				error("Time limit exeeded.",0)
+				error("Time limit exceeded.",0)
 			end,"",1)
-			error("Time limit exeeded.",0)
+			error("Time limit exceeded.",0)
 		end,"",20000)
 		local res={coroutine.resume(func)}
 		local o
