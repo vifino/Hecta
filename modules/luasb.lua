@@ -163,7 +163,7 @@ do
 		for l1=2,maxval(res) do
 			o=(o or "")..tostring(res[l1]).."\n"
 		end
-		return (out..(o or "nil")):gsub("^[\r\n]+",""):gsub("[\r\n]+$",""):gsub("[\r\n]+"," | "):sub(1,440):gsub("| ^","")
+		return (out..(o or "nil")):gsub("^[\r\n]+",""):gsub("[\r\n]+^",""):gsub("[\r\n]+$",""):gsub("[\r\n]+"," | "):sub(1,440):gsub("| ^",""):gsub("|^","")
 	end
 	commands[">>"]=function(txt,nick,chan)
 		if isPrivileged(nick) then
