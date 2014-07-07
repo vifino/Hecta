@@ -94,6 +94,7 @@ do
 			},
 			channel = "",
 			nick = "",
+			pcall = pcall,
 			username = username,
 			string = {
 						sub = string.sub,
