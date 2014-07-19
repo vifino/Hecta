@@ -77,7 +77,7 @@ do
 				execute=function(txt)
 					local cmd,tx=txt:match("^(.-) (.+)$")
 					cmd=cmd or txt
-					if cmd=="lua" or cmd=="dofile"  then
+					if cmd=="lua" or cmd=="luafile"  then
 						return no()
 					end
 					return evalCommand(usr["nick"],usr["chan"],txt) or nil
