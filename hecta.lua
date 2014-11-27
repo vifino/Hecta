@@ -144,7 +144,7 @@ while not modeset do
 end
 if password ~= nil then
 	print("Password set, identifying...")
-	send("PRIVMSG NickServ :identify ".. password)
+	send("PASS :".. password)
 	local identified = false
 	--[[while not identified do
 		local line = receive()
